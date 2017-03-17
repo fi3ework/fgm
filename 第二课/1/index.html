@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>1</title>
+	</head>
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+		}
+
+		#wrapper{
+			width: 100px;
+			margin: 20px auto 0 auto;
+		}
+		ul{
+			display: none;
+			width: 90px;
+			margin-top: 5px;
+			background-color: aliceblue;
+			border: 1px solid slateblue;
+			text-align: center;
+			list-style-type: none;
+		}
+
+		li{
+			width: 100%;
+			display:inline-block;
+			line-height: 24px;
+		}
+
+		li:last-child{
+			border-top: 1px solid slateblue;
+		}
+
+		li:hover{
+			background-color: cornflowerblue;
+		}
+	</style>
+	<script>
+		window.onload = function () {
+			var button = document.querySelector("button");
+			var list = document.querySelector("ul");
+            button.onclick = function () {
+                list.style.display = list.style.display == "block" ? "none" : "block";
+            };
+
+            var closeTip = document.querySelector("#wrapper ul li:last-child");
+            closeTip.onclick = function () {
+                list.style.display = "none";
+            }
+        }
+	</script>
+	<body>
+		<div id="wrapper">
+			<button name="show">输入法</button>
+			<ul>
+				<li>手写</li>
+				<li>拼音</li>
+				<li>关闭</li>
+			</ul>
+		</div>
+	</body>
+</html>

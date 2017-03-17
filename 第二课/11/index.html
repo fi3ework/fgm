@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>11</title>
+	</head>
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+		}
+
+		body{
+			background-color: dimgray;
+		}
+
+		#wrapper{
+			position: relative;
+			margin: 20px auto 0 auto;
+			height: 260px;
+			width: 208px;
+			background-color: white;
+			border-radius: 8px;
+			padding: 8px 8px 10px 10px;
+		}
+
+		ul{
+			cursor: pointer;
+			list-style-type: none;
+		}
+
+		img{
+			float: left;
+			margin: 2px 2px 0 0;
+			border-radius: 4px;
+		}
+		#wrapper div{
+			display:none;
+			position:absolute;
+			top: 10px;
+			left: 10px;
+			width:154px;
+			height:154px;
+			opacity:0.5;
+			filter:alpha(opacity=50);
+			background:#fff url(http://fgm.cc/learn/lesson2/img/loading.gif) 50% 50% no-repeat;
+		}
+
+	</style>
+	<script>
+		window.onload = function () {
+			var smallEles = document.querySelectorAll("ul li");
+			var bigEle = document.getElementById("bigShow");
+			var placeHolder = document.querySelector("#wrapper div");
+
+			for (var i = 0; i < smallEles.length; i++){
+			    smallEles[i].index = i;
+			    smallEles[i].onmouseover = function () {
+			        var currSrc = "http://fgm.cc/learn/lesson2/img/big_" + (this.index + 1)  + ".jpg";
+                    bigEle .src = currSrc;
+                    placeHolder.style.display = "block";
+                    bigEle.complete ? placeHolder.style.display = "none" : (bigEle.onload = function () {
+						placeHolder.style.display = "none";
+                        });
+                }
+			}
+        }
+	</script>
+	<body>
+		<div id="wrapper">
+			<img id="bigShow" src="http://fgm.cc/learn/lesson2/img/big_1.jpg"><div></div>
+			<ul>
+				<li><img src="http://fgm.cc/learn/lesson2/img/small_1.jpg"></li>
+				<li><img src="http://fgm.cc/learn/lesson2/img/small_2.jpg"></li>
+				<li><img src="http://fgm.cc/learn/lesson2/img/small_3.jpg"></li>
+				<li><img src="http://fgm.cc/learn/lesson2/img/small_4.jpg"></li>
+				<li><img src="http://fgm.cc/learn/lesson2/img/small_5.jpg"></li>
+				<li><img src="http://fgm.cc/learn/lesson2/img/small_6.jpg"></li>
+				<li><img src="http://fgm.cc/learn/lesson2/img/small_7.jpg"></li>
+				<li><img src="http://fgm.cc/learn/lesson2/img/small_8.jpg"></li>
+				<li><img src="http://fgm.cc/learn/lesson2/img/small_9.jpg"></li>
+				<li><img src="http://fgm.cc/learn/lesson2/img/small_10.jpg"></li>
+				<li><img src="http://fgm.cc/learn/lesson2/img/small_11.jpg"></li>
+			</ul>
+		</div>
+	</body>
+</html>

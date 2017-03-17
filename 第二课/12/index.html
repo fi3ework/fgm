@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>12</title>
+	</head>
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+			font-size: 8px ;
+		}
+
+		#wrapper{
+			width: 120px;
+			height: 250px;
+			margin: 20px auto 0 auto;
+			background-color: #fafafa;
+			border: 1px solid dimgray;
+			border-radius: 8px;
+			padding: 10px;
+		}
+
+		ul{
+			border-top: 1px solid black;
+			list-style-type:none;
+			margin-top: 10px;
+		}
+
+		ul li{
+			margin: 10px;
+		}
+
+		input{
+			margin-right: 5px;
+		}
+
+		span{
+			cursor: pointer;
+			margin-left: 10px;
+			color: royalblue;
+		}
+
+		span:hover{
+			color: red;
+		}
+	</style>
+	<script>
+		window.onload = function () {
+			var allEle = document.getElementById("all");
+			var toggleEle = document.querySelector("#wrapper span");
+			var optionEles = document.querySelectorAll("#wrapper ul li input");
+			var allTextEle = document.querySelector("#wrapper label");
+            var optionLength = optionEles.length;
+			var checkedCount = 0;
+
+			function isChecked() {
+				if (this.checked){
+				    checkedCount++;
+				    console.log("+ " + checkedCount);
+				    console.log(this);
+				}
+				if (!this.checked){
+				    checkedCount--;
+                    console.log("- " + checkedCount);
+                    console.log(this);
+                }
+
+                if (checkedCount == optionLength){
+				    allEle.checked = true;
+				} else {
+                    allEle.checked = false;
+				}
+            }
+
+            //设定每个checkbox
+			for (var i = 0; i < optionLength; i++){
+			    optionEles[i].onclick = isChecked;
+			}
+
+			//设定全选
+			allEle.onclick = function () {
+			    if (checkedCount != optionLength){
+			        for (var i = 0; i < optionLength; i++){
+			            optionEles[i].checked = true;
+					}
+					checkedCount = optionLength;
+					allTextEle.innerText = "全不选";
+				} else {
+                    for (var j = 0; j < optionLength; j++){
+                        optionEles[j].checked = false;
+                    }
+                    checkedCount = 0;
+                    allTextEle.innerText = "全选";
+                }
+            }
+
+            //设定反选
+			toggleEle.onclick = function () {
+                for (var i = 0; i < optionLength; i++){
+                    optionEles[i].checked = !optionEles[i].checked;
+                }
+            }
+        }
+	</script>
+	<body>
+		<div id="wrapper">
+			<input type="checkbox" id="all"><label for="all">全选</label><span>反选</span>
+			<ul>
+				<li><input type="checkbox">选项（一）</li>
+				<li><input type="checkbox">选项（二）</li>
+				<li><input type="checkbox">选项（三）</li>
+				<li><input type="checkbox">选项（四）</li>
+				<li><input type="checkbox">选项（五）</li>
+				<li><input type="checkbox">选项（六）</li>
+				<li><input type="checkbox">选项（七）</li>
+				<li><input type="checkbox">选项（八）</li>
+				<li><input type="checkbox">选项（九）</li>
+				<li><input type="checkbox">选项（十）</li>
+			</ul>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>8</title>
+	</head>
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+		}
+
+		#wrapper{
+			width: 240px;
+			background-color: lightgray;
+			margin: 0 auto;
+			padding: 0 0 10px 10px;
+		}
+
+		#wrapper ul{
+			overflow: hidden;
+		}
+
+		#wrapper ul li{
+			list-style-type: none;
+			margin: 10px 10px 0 0;
+			float: left;
+			width: 48px;
+			height: 48px;
+			border: 1px solid dimgray;
+			background-color: dimgray;
+			color: #fff;
+			font-family: Tahoma, Serif;
+			cursor: pointer;
+		}
+
+		#wrapper ul li p{
+			text-align: center;
+			font-size : 17px;
+		}
+
+		#wrapper ul li p:first-child{
+			font-weight: 900;
+			margin-top: 3px;
+		}
+
+		#wrapper ul li.current{
+			border: 1px solid dimgray;
+			background-color: aliceblue;
+			color: deeppink;
+		}
+
+		#holiday{
+			display: none;
+			width: 210px;
+			margin: 10px 10px 0 0;
+			border: 1px solid azure;
+			background-color: white;
+			padding: 10px;
+		}
+	</style>
+	<script>
+		window.onload = function () {
+            var desc = [
+                "元旦：1月1日至3日放假三天。",
+                "春节：2月2日至8日放假7天。",
+                "妇女节：3月8日妇女节，与我无关。",
+                "清明节：4月3日至5日放假3天",
+                "劳动节：4月30日至5月2日放假3天。",
+                "端午节：6月4日至6日放假3天。",
+                "小暑：7月7日小暑。不放假。",
+                "七夕节：8月6日七夕节。不放假。",
+                "中秋节：9月10日至12日放假3天。",
+                "国庆节：10月1日至7日放假7天。",
+                "立冬：11月8日立冬。不放假。",
+                "艾滋病日:12月1日<br />废除奴隶制国际日:12月2日。"
+            ];
+
+            var monthEles = document.querySelectorAll("#month li");
+            var holidayEle = document.querySelector("#holiday p");
+            var currMonth = document.querySelector("#holiday strong");
+			for (var i = 0; i < monthEles.length; i++){
+                monthEles[i].index = i;
+                //为每个月份设置onmouseover
+                monthEles[i].onmouseover = function () {
+			        for(var j = 0; j < monthEles.length; j++){
+			            monthEles[j].className = "";
+					}
+					this.className = "current";
+					holidayEle.innerHTML = desc[this.index];
+					currMonth.innerHTML = this.index + 1;
+					//插入月份
+					document.getElementById("holiday").style.display = "block";
+					console.log(document.querySelector("#holiday h2").childElementCount)
+					if (document.querySelector("#holiday h2").childElementCount == 1){
+					    var spanEle = document.createElement("span");
+						var text = document.createTextNode("月份的节日：");
+                        spanEle.appendChild(text);
+						document.querySelector("#holiday h2").appendChild(spanEle);
+					}
+                }
+			}
+
+			document.getElementById("wrapper").onmouseout = function(){
+			    console.log("ff");
+			}
+        }
+	</script>
+	<body>
+		<div id="wrapper">
+			<ul id="month">
+				<li><p>1</p><p>JAN</p></li>
+				<li><p>2</p><p>FEB</p></li>
+				<li><p>3</p><p>MAR</p></li>
+				<li><p>4</p><p>APR</p></li>
+				<li><p>5</p><p>MAY</p></li>
+				<li><p>6</p><p>JUN</p></li>
+				<li><p>7</p><p>JUL</p></li>
+				<li><p>8</p><p>AUG</p></li>
+				<li><p>9</p><p>SEP</p></li>
+				<li><p>10</p><p>OCT</p></li>
+				<li><p>11</p><p>NOV</p></li>
+				<li><p>12</p><p>DEC</p></li>
+			</ul>
+			<div id="holiday">
+				<h2><strong></strong></h2>
+				<p></p>
+			</div>
+		</div>
+	</body>
+</html>

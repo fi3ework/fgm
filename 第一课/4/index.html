@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>4</title>
+	</head>
+	<style>
+		#wrapper{
+			width: 420px;
+			overflow: hidden;
+			margin: 0 auto;
+		}
+
+		#wrapper button{
+			display: block;
+			margin: 0 auto;
+		}
+
+		#wrapper div{
+			float: left;;
+			width: 100px;
+			height: 100px;
+			background-color: black;
+			margin: 20px;
+		}
+	</style>
+	<script>
+		window.onload = function () {
+			var button = document.querySelector("#wrapper button");
+			console.log(button);
+			button.onclick = function () {
+				var divs = document.querySelectorAll("#wrapper div");
+				for (var i = 0; i < divs.length; i++){
+					divs[i].style.backgroundColor = "red";
+				}
+			}
+        }
+	</script>
+	<body>
+		<div id="wrapper">
+			<button>点击将DIV变为红色</button>
+			<div class="changeColor"></div>
+			<div class="changeColor"></div>
+			<div class="changeColor"></div>
+		</div>
+	</body>
+</html>

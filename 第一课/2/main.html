@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>2</title>
+		<link rel="stylesheet" href="green.css">
+		<style>
+			body, ul, li{
+				margin: 0;
+				padding: 0;
+			}
+
+			#wrapper{
+				width: 500px;
+				margin: 20px auto 0px auto;
+			}
+
+			#list{
+				width: 333px;
+				display: block;
+				list-style-type: none;
+				margin-top: 20px;
+			}
+
+			#list li{
+				display: inline-block;
+				border: 1px white solid;
+				padding: 5px 15px 5px 15px;
+				font-size: 12px;
+				margin-right: -5px;
+			}
+
+			#list li a{
+				color: #fff;
+			}
+
+			#list li a:link{
+				text-decoration: none;
+			}
+			#list li a:hover{
+				text-decoration: underline;
+			}
+
+			#toggleWrapper{
+				width: 400px;
+				overflow: hidden;
+				/*margin: 0 auto;*/
+			}
+
+			.toggleDiv{
+				height: 5px;
+				width: 5px;
+				margin: 5px ;
+				/*background-color: white;*/
+				float: left;
+			}
+
+			#red{
+				background-color: red;
+				border: 3px red solid;
+			}
+
+			#green{
+				background-color: green;
+				border: 3px green solid;
+			}
+
+			#black{
+				background-color: black;
+				border: 3px black solid;
+			}
+
+			.current{
+				background-color: #fff!important;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="wrapper">
+			<div id="toggleWrapper">
+				<div id="red" class="toggleDiv"></div>
+				<div id="green" class="toggleDiv"></div>
+				<div id="black" class="toggleDiv"></div>
+			</div>
+			<ul id="list">
+				<li><a href="#">新闻</a></li>
+				<li><a href="#">娱乐</a></li>
+				<li><a href="#">体育</a></li>
+				<li><a href="#">电影</a></li>
+				<li><a href="#">音乐</a></li>
+				<li><a href="#">旅游</a></li>
+			</ul>
+		</div>
+	</body>
+	<script src="script.js"></script>
+</html>

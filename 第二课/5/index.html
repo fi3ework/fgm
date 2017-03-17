@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>5</title>
+	</head>
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+		}
+
+		div, label, input, button{
+			margin: 5px;
+		}
+		#wrapper{
+			width: 300px;
+			height: 300px;
+			margin: 111px auto 0 auto;
+		}
+
+		#div1{
+			width: 159px;
+			height: 159px;
+			background-color: black;
+			color: #fff;
+			font-size: 8px;
+			padding: 5px
+		}
+	</style>
+	<script>
+        window.onload = function () {
+            var div1Ele = document.getElementById("div1");
+            var nameEle = document.querySelectorAll("#wrapper input")[0];
+            var valueEle = document.querySelectorAll("#wrapper input")[1];
+            var ensureEle = document.querySelectorAll("#wrapper button")[0];
+            var resetEle = document.querySelectorAll("#wrapper button")[1];
+			ensureEle.onclick = function () {
+				div1Ele.style[nameEle.value] = valueEle.value;
+            };
+
+			resetEle.onclick = function () {
+				div1Ele.style.cssText = "";
+            }
+        };
+
+
+
+
+	</script>
+	<body>
+		<div id="wrapper">
+			<div>
+				<label for="propertyName">属性名：</label>
+				<input id="propertyName" value="background">
+			</div>
+			<div>
+				<label for="propertyValue">属性值：</label>
+				<input id="propertyValue" value="blue">
+			</div>
+			<button>确定</button>
+			<button>重置</button>
+			<div id="div1">
+				在上方输入框输入"属性名"及"属性值"，点击确定按钮查看效果。
+			</div>
+		</div>
+	</body>
+</html>

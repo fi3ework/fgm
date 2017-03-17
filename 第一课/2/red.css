@@ -1,0 +1,12 @@
+body{
+    background-color: darksalmon;
+}
+
+#green{
+    background-color: red;
+    border-color: #fff;
+}
+
+#list li{
+    background-color: red;
+}

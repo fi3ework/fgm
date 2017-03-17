@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>3</title>
+		<style>
+			form *{
+				display: block;
+				margin: 0 auto;
+				margin-top: 10px;
+			}
+		</style>
+
+		<script>
+			window.onload = function () {
+				var button = document.querySelector("form button");
+				var inputs = document.querySelectorAll("form input");
+				button.onclick = function () {
+					for	(var i = 0; i < inputs.length; i++){
+                        var currText = inputs[i].value;
+                        alert(currText);
+                    }
+                }
+            }
+		</script>
+	</head>
+	<body>
+		<form>
+			<input type="text" value="北京" name="first">
+			<input type="text" value="朝阳区" name="second">
+			<button>传参</button>
+		</form>
+	</body>
+</html>

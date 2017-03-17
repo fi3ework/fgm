@@ -1,0 +1,12 @@
+body{
+    background-color: aquamarine;
+}
+
+#green{
+    background-color: #fff;
+    /*border-color: #fff;*/
+}
+
+#list li{
+    background-color: green;
+}

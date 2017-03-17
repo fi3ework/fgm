@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>9</title>
+	</head>
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+		}
+
+		#wrapper{
+			border: 1px solid gray;
+			width: 200px;
+			margin: 40px auto 0 auto;
+		}
+
+		h2{
+			height: 30px;
+			line-height: 30px;
+			background-color: lightgray;
+			font-size: 80%;
+			color: dimgray;
+			padding-left: 20px;
+			cursor: pointer;
+			border: 1px solid white;
+			background: #ced3d7 url("http://fgm.cc/learn/lesson2/img/ico.gif") 180px 15px no-repeat;
+		}
+
+		ul{
+			background-color: aliceblue;
+			display: none;
+			list-style-type: none;
+		}
+
+
+		h2.open{
+			background-position:180px -12px;
+		}
+
+
+		a{
+			display: block;
+			text-decoration: none;
+			padding-left: 10px;
+			color: gray;
+			font-size: 10px;
+			line-height: 30px;
+		}
+
+		a:hover{
+			background-color: white;
+			text-decoration: underline;
+		}
+	</style>
+	<script>
+		window.onload = function () {
+			var toggleEle = document.querySelector("h2");
+			var ulEle = document.querySelector("ul");
+			toggleEle.onclick = function () {
+                ulEle .style.display = ulEle.style.display != "block" ? "block" : "none";
+                toggleEle.className = toggleEle.className == "" ? "open" : "";
+            }
+        }
+	</script>
+	<body>
+		<div id="wrapper">
+			<h2>播放列表...</h2>
+			<ul>
+				<li><a href="javascript:;">玩家之徒 - 蔡依林</a></li>
+				<li><a href="javascript:;">原谅我就是这样的女生 - 戴佩妮</a></li>
+				<li><a href="javascript:;">猜不透 - 丁当</a></li>
+				<li><a href="javascript:;">自导自演 - 周杰伦</a></li>
+				<li><a href="javascript:;">浪漫窝 - 弦子</a></li>
+				<li><a href="javascript:;">流年 - 王菲</a></li>
+			</ul>
+		</div>
+	</body>
+</html>

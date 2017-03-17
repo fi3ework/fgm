@@ -1,0 +1,12 @@
+body{
+    background-color: gray;
+}
+
+#black{
+    background-color: black;
+    border-color: #fff;
+}
+
+#list li{
+    background-color: black;
+}

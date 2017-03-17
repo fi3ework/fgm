@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>6</title>
+		<style>
+			body{
+				font-size: 6px;
+			}
+
+			#wrapper{
+				width: 200px;
+				margin: 0px auto;
+			}
+
+			#hint{
+				display: none;
+				width: 150px;
+				margin-top: 5px;
+				padding: 5px;
+				background-color: aliceblue;
+				border: 1px steelblue solid;
+			}
+		</style>
+		<script>
+			window.onload = function () {
+				var button = document.querySelector("label");
+				var hintEle = document.getElementById("hint");
+				button.onmouseout = function () {
+					hintEle.style.display = "none";
+                }
+
+                button.onmouseover = function () {
+                    hintEle.style.display = "block";
+                }
+            }
+		</script>
+	</head>
+	<body>
+		<div id="wrapper">
+			<label><input type="checkbox" value="remember">两周内自动登录</label>
+			<div id="hint">两周内自动登录哟，请不要再公共电脑上勾选</div>
+		</div>
+	</body>
+</html>

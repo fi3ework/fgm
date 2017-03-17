@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>4</title>
+		<style>
+			*{
+				margin: 0;
+				padding: 0;
+			}
+
+			html, body{
+				height: 100%;
+				overflow: hidden;
+
+			}
+
+			body{
+				/*position: relative;*/
+				background-color: beige;
+			}
+
+			#btnWrapper{
+				width: 100px;
+				margin: 20px auto 0 auto;
+			}
+
+			#overlay{
+				display: none;
+				position: absolute;
+				top: 0px;
+				left: 0px;
+				width: 100%;
+				height: 100%;
+				background-color: black;
+				opacity: 0.5 ;
+				filter:alpha(opacity = 50);
+			}
+
+
+			#win{
+				display: none;
+				position: absolute;
+				top: 100px;
+				left: 400px;
+				width: 400px;
+				height: 200px;
+				background-color: white;
+				border: 3px solid orange;
+			}
+
+			#nav{
+				height: 30px;
+				line-height: 30px;
+				background-color: darkorange;
+				text-align: right;
+			}
+
+			#win #close{
+				border: 1px solid orange;
+				background-color: white;
+				margin-right: 5px;
+				cursor: pointer;
+			}
+
+			.a{
+				height: 200px;
+				width: 200px;
+				background-color: yellow;
+			}
+
+			.b{
+				height: 100px;
+				width: 100px;
+				background-color: red;
+				margin-top: 30px;
+			}
+
+		</style>
+		<script>
+			window.onload = function () {
+                var overlayEle = document.getElementById("overlay");
+                var winEle = document.getElementById("win");
+				var btnEle = document.querySelector("#btnWrapper button");
+				btnEle.onclick = function () {
+                    overlayEle.style.display = "block";
+                    winEle.style.display = "block";
+                }
+                var close = document.getElementById("close");
+				close.onclick = function () {
+                    overlayEle.style.display = "none";
+                    winEle.style.display = "none";
+                }
+            }
+		</script>
+	</head>
+	<body>
+		<!--<div class="a">-->
+			<!--<div class="b">b</div>-->
+		<!--</div>-->
+		<div id="overlay"></div>
+		<div id="win"><div id="nav"><span id="close">×</span></div></div>
+		<div id="btnWrapper">
+			<button>弹出层</button>
+		</div>
+	</body>
+</html>

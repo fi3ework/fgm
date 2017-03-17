@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>10</title>
+		<style>
+			*{
+				margin: 0;
+				padding: 0 ;
+			}
+
+			#wrapper h2{
+				height: 30px;
+				text-align: center;
+				margin:10px;
+			}
+
+			#wrapper{
+				width: 550px;
+				height: 270px;
+				margin: 20px auto 0 auto;
+				border: 1px solid black;
+				padding: 10px 10px 0 0;
+			}
+
+			#wrapper li{
+				position: relative;
+				list-style-type: none;
+				float: left;
+				width: 78px;
+				height: 78px;
+				margin: 0 0 10px 10px;
+				border: 1px solid dimgray;
+				background-color: #eee;
+				padding: 10px;
+				font-size: 8px;
+			}
+
+			#wrapper a{
+				text-decoration: none;
+				color: dimgray;
+
+			}
+
+			#wrapper a strong{
+				font-family: Tahoma, Serif;
+				display: block;
+				margin-bottom: 5px;
+			}
+
+			img{
+				cursor: crosshair;
+				display: none;
+				border: 1px solid dimgray;
+				position: absolute;
+				left: -20px;
+				top: -20px;
+			}
+		</style>
+		<script>
+			window.onload = function () {
+				var imgEles = document.querySelectorAll("ul img");
+				var infoEles = document.querySelectorAll("ul li");
+				for (var i = 0; i < infoEles.length; i++){
+				    infoEles[i].onmouseover	= function () {
+						this.querySelector("img").style.display = "block";
+                    };
+
+                    infoEles[i].onmouseout	= function () {
+                        this.querySelector("img").style.display = "none";
+                    };
+
+                    imgEles[i].onmouseout = function () {
+                        console.log("into out");
+                        this.style.display = "none";
+                    };
+				}
+            }
+		</script>
+	</head>
+	<body>
+		<div id="wrapper">
+			<h2>名车车标展示-鼠标移过显示车标</h2>
+			<ul>
+				<li>
+					<a href="javascript:;" title="BMW 宝马汽车"><strong>BMW</strong>宝马汽车</a>
+					<img src="http://fgm.cc/learn/lesson2/img/1.jpg" alt="BMW 宝马汽车" />
+				</li>
+				<li>
+					<a href="javascript:;" title="Alfa Romeo 阿尔法-罗米欧"><strong>Alfa Romeo</strong> 阿尔法-罗米欧</a>
+					<img src="http://fgm.cc/learn/lesson2/img/2.jpg" alt="Alfa Romeo 阿尔法-罗米欧" />
+				</li>
+				<li>
+					<a href="javascript:;" title="Skoda 斯柯达"><strong>Skoda</strong> 斯柯达</a>
+					<img src="http://fgm.cc/learn/lesson2/img/3.jpg" alt="Skoda 斯柯达" />
+				</li>
+				<li>
+					<a href="javascript:;" title="Volkswagen 大众汽车"><strong>Volkswagen</strong> 大众汽车</a>
+					<img src="http://fgm.cc/learn/lesson2/img/4.jpg" alt="Volkswagen 大众汽车" />
+				</li>
+				<li>
+					<a href="javascript:;" title="Saab 萨布牌轿"><strong>Saab</strong> 萨布牌轿车</a>
+					<img src="http://fgm.cc/learn/lesson2/img/5.jpg" alt="Saab 萨布牌轿" />
+				</li>
+				<li>
+					<a href="javascript:;" title="Lamborghini 兰博基尼"><strong>Lamborghini</strong> 兰博基尼</a>
+					<img src="http://fgm.cc/learn/lesson2/img/6.jpg" alt="Lamborghini 兰博基尼" />
+				</li>
+				<li>
+					<a href="javascript:;" title="Porsche 保时捷"><strong>Porsche</strong> 保时捷</a>
+					<img src="http://fgm.cc/learn/lesson2/img/7.jpg" alt="Porsche 保时捷" />
+				</li>
+				<li>
+					<a href="javascript:;" title="Peugeot 标致"><strong>Peugeot</strong> 标致</a>
+					<img src="http://fgm.cc/learn/lesson2/img/8.jpg" alt="Peugeot 标致" />
+				</li>
+				<li>
+					<a href="javascript:;" title="Mercedes1 梅赛德斯 奔驰"><strong>Mercedes1</strong> 梅赛德斯 奔驰</a>
+					<img src="http://fgm.cc/learn/lesson2/img/9.jpg" alt="Mercedes1 梅赛德斯 奔驰" />
+				</li>
+				<li>
+					<a href="javascript:;" title="Buick 别克汽车"><strong>Buick</strong> 别克汽车</a>
+					<img src="http://fgm.cc/learn/lesson2/img/10.jpg" alt="Buick 别克汽车" />
+				</li>
+			</ul>
+
+		</div>
+	</body>
+</html>

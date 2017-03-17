@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>6</title>
+		<style>
+			*{
+				margin: 0;
+				padding: 0;
+			}
+
+			#wrapper{
+				border: 1px solid black;
+				overflow: hidden;
+				list-style-type: none;
+				padding: 10px 0 0 10px;
+				width: 700px;
+				margin: 20px auto;
+			}
+
+			#wrapper li{
+				float: left;
+				margin: 0px 10px 10px 0px;
+				display: block;
+				opacity : 0.5;
+			}
+
+			#wrapper img{
+				border: 1px solid gray;
+			}
+		</style>
+		<script>
+			window.onload = function () {
+				var liEles = document.querySelectorAll("#wrapper li");
+				for (var i = 0; i < liEles.length; i++){
+                    liEles[i].onmouseover = function () {
+						this.style.opacity = 1
+                    };
+
+                    liEles[i].onmouseout = function () {
+						this.style.opacity = 0.5;
+                    };
+				}
+            }
+		</script>
+	</head>
+	<body>
+			<ul id="wrapper">
+				<li><img src="http://fgm.cc/learn/lesson2/img/1.jpg"></li>
+				<li><img src="http://fgm.cc/learn/lesson2/img/2.jpg"></li>
+				<li><img src="http://fgm.cc/learn/lesson2/img/3.jpg"></li>
+				<li><img src="http://fgm.cc/learn/lesson2/img/4.jpg"></li>
+				<li><img src="http://fgm.cc/learn/lesson2/img/5.jpg"></li>
+				<li><img src="http://fgm.cc/learn/lesson2/img/6.jpg"></li>
+				<li><img src="http://fgm.cc/learn/lesson2/img/7.jpg"></li>
+				<li><img src="http://fgm.cc/learn/lesson2/img/8.jpg"></li>
+				<li><img src="http://fgm.cc/learn/lesson2/img/9.jpg"></li>
+				<li><img src="http://fgm.cc/learn/lesson2/img/10.jpg"></li>
+			</ul>
+	</body>
+</html>

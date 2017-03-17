@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>3</title>
+		<style>
+			*{
+				margin: 0;
+				padding: 0;
+			}
+
+			#wrapper{
+				width: 400px;
+				margin: 0 auto ;
+				margin-top: 50px;
+				font-size: 8px;
+			}
+
+			#wrapper input{
+				margin-bottom: 10px;
+				margin-right: 10px;
+			}
+
+			#sum{
+				line-height: 60px;
+				color: red;
+				font-size: 40px;
+			}
+		</style>
+		<script>
+			window.onload = function () {
+				var btnEle = document.getElementById("btn");
+				var sumEle = document.getElementById("sum");
+				var inputEle = document.querySelector("#wrapper input");
+
+
+                inputEle.onkeyup = function ()
+                {
+                    console.log("haha");
+                    this.value = this.value.replace(/[^(\d)|(,)]/,"")
+					console.log(this.value);
+                }
+
+
+				btnEle.onclick = function () {
+					var numArr = inputEle.value.split(",");
+					var sum = 0;
+					for (var i in numArr){
+					    sum += parseInt(numArr[i]);
+					}
+					sumEle.innerHTML = sum;
+                }
+            }
+		</script>
+	</head>
+	<body>
+		<div id="wrapper">
+			<input type="text" value="1,2,3,4,5,6,7,8,9">输入数字求和，数字之间用半角","符号分割。
+			<p><button id="btn">求和</button></p>
+			<span id="sum"></span>
+		</div>
+	</body>
+</html>
