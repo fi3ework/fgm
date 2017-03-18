@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>2</title>
+	</head>
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+			font-size: 8px;
+		}
+
+		#wrapper{
+			width: 220px;
+			margin: 20px auto 0 auto;
+		}
+
+		#wrapper input {
+			width: 50px;
+			background-color: #f0f0f0;
+			border: 1px solid #ccc;
+		}
+
+		#wrapper span{
+			margin: 5px;
+		}
+
+		#wrapper span:last-of-type{
+			font-family: Arial;
+			font-weight: 700;
+			color: green;
+		}
+
+		#wrapper button{
+			padding: 3px;
+		}
+	</style>
+	<script>
+		window.onload = function () {
+			var sumEle = document.querySelector("#wrapper button");
+			var textEles = document.querySelectorAll("#wrapper input");
+			var showEle = document.querySelector("#wrapper span:last-of-type");
+			sumEle.onclick = function () {
+			    if (!(textEles[0].value && textEles[1].value)){
+			        alert("input something plz");
+			        return;
+				}
+				var value = parseInt(textEles[0].value) + parseInt(textEle[1].value);
+				showEle.innerHTML = value;
+            };
+
+			for (var i = 0; i < textEles.length; i++){
+			    textEles[i].onkeyup = function () {
+					this.value = this.value.replace(/[^\d]/,"")
+                }
+			}
+
+            //
+			var str = "categorysadfe";
+			for (var i = 0; i < 5; i++){
+				var reg = /cat/g;
+			    console.log(reg.test(str));
+            }
+
+        }
+	</script>
+	<body>
+		<div id="wrapper">
+			<input type="text"><span>+</span><input type="text"><span>=</span><span>?</span><button>求和</button>
+		</div>
+	</body>
+</html>

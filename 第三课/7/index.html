@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>7</title>
+	</head>
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+			font-family: Arial;
+		}
+
+		#wrapper{
+			/*height: 670px;*/
+			width: 300px;
+			margin: 20px auto 0 auto;
+			background-color: #f0f0f0;
+			background:url("http://fgm.cc/learn/lesson3/img/bg.jpg") repeat;
+		}
+
+		#wrapper div:first-child{
+			text-align: right;
+			height: 25px;
+			color: #fff;
+			line-height: 25px;
+			font-size: 8px;
+			padding-right: 6px;
+		}
+
+		#wrapper #show{
+			width: 290px;
+			padding: 0 5px;
+			height: 84px;
+			background:url("http://fgm.cc/learn/lesson3/img/inputBg.jpg") repeat-x;
+			text-align: right;
+		}
+
+		#wrapper #process{
+			height: 30px;
+			padding-left: 10px;
+			line-height: 30px;
+			margin-bottom: 3px;
+			font-size: 8px;
+			margin-right: 10px;
+			/*background-color: aqua;*/
+		}
+
+		#wrapper #result{
+			height: 40px;
+			padding-left: 10px;
+			line-height: 40px;
+			font: 800 40px Arial;
+			margin-right: 10px;;
+
+		}
+
+
+		#wrapper ul{
+			position: relative;
+			padding:0 0 17px 8px;
+			overflow: hidden;
+
+		}
+
+		#wrapper ul li{
+			float: left;
+			width: 63px;
+			height: 41px;
+			margin: 17px 10px 0 0;
+			font: 700 22px Arial;
+			list-style-type: none;
+			background-color: lightgray;
+			cursor: pointer;
+			text-align: center;
+			line-height: 41px;
+			background:url("http://fgm.cc/learn/lesson3/img/btn.png") repeat-x;
+			color: #fff;;
+		}
+
+		#wrapper ul li:hover{
+			background-position:-63px 0px;
+		}
+
+		#wrapper ul li.operation{
+			background:url("http://fgm.cc/learn/lesson3/img/btn.png") repeat-x;
+			background-position:0 -41px;
+			color: #fff;
+		}
+
+		#wrapper ul li.operation:hover{
+			background-position:-63px -41px;
+		}
+
+		#wrapper ul li:nth-of-type(16){
+			clear: left;
+			width: 136px;
+			background-position:0 -82px;
+		}
+
+		#wrapper ul li:nth-of-type(16):hover{
+			background-position:0 -123px;
+		}
+
+		#wrapper ul li:nth-of-type(18){
+			height: 99px ;
+			position: absolute;
+			right: 0px;
+			top: 174px ;
+			line-height: 99px;
+			background-position:0 -164px;
+		}
+
+		#wrapper ul li:nth-of-type(18):hover{
+			background-position: -63px -164px;
+		}
+
+	</style>
+	<script>
+		window.onload = function () {
+			var operationEles = document.getElementsByClassName("operation");
+			var resultEle = document.getElementById("result");
+			var processEle = document.getElementById("process");
+			var equalEle = document.getElementById("equal");
+			var liEles = document.querySelectorAll("#wrapper li");
+			var equalFlag = false;
+
+			for (var i = 0; i < liEles.length; i++) {
+                liEles[i].onclick = function () {
+                    switch (this.innerHTML) {
+                        case "c":
+                            processEle.innerHTML = "";
+                            resultEle.innerHTML = "0";
+                            equalFlag = false;
+                            break;
+                        case "%":
+                            count("%");
+                            break;
+                        case "÷":
+                            count("/");
+                            break;
+                        case "×":
+                            count("*");
+                            break;
+                        case "+":
+                            count("+");
+                            break;
+                        case "-":
+                            count("-");
+                            break;
+                        case "=":
+                            calc();
+                            break;
+                        default:
+                            if (equalFlag) {
+                                processEle.innerHTML = "";
+                                resultEle.innerHTML = this.innerHTML;
+                                equalFlag = false;
+                            } else {
+                                resultEle.innerHTML = /[\+\-\*\/\%]$/.test(resultEle.innerHTML) ? this.innerHTML :
+                                    (resultEle.innerHTML + this.innerHTML).replace(/^[0\+\-\*\/\%](\d)/, "$1");
+                            }
+                    }
+                }
+            }
+
+			function count(symbol) {
+			    if (equalFlag) {
+                    equalFlag = false;
+                    processEle.innerHTML = resultEle.innerHTML + symbol.toString();
+                    resultEle.innerHTML = symbol;
+                }
+                else {
+			        console.log("into else");
+			        if (/[\+\-\*\/\%]$/.test(processEle.innerHTML)){
+                        processEle.innerHTML = processEle.innerHTML.replace(/.$/, symbol);
+                    } else{
+			            processEle.innerHTML += (resultEle.innerHTML + symbol);
+					}
+                        resultEle.innerHTML = symbol;
+				}
+            }
+
+			//=
+			function calc() {
+			    equalFlag || !(/\d+/).test(resultEle.innerHTML) || (processEle.innerHTML += resultEle.innerHTML);
+				var result = processEle.innerHTML;
+				equalFlag = true;
+				(/[\+\-\%\*\/]$/.test(resultEle.innerHTML)) ? (console.log("you can not do this."), equalFlag = false) : (resultEle.innerHTML = eval(result));
+            }
+
+        }
+	</script>
+	<body>
+		<div id="wrapper">
+			<div>made by firework</div>
+			<div id="show">
+				<p id="process"></p>
+				<p id="result">0</p>
+			</div>
+			<ul>
+				<li class="operation">c</li>
+				<li class="operation">%</li>
+				<li class="operation">÷</li>
+				<li class="operation">×</li>
+				<li>7</li>
+				<li>8</li>
+				<li>9</li>
+				<li class="operation">-</li>
+				<li>4</li>
+				<li>5</li>
+				<li>6</li>
+				<li class="operation">+</li>
+				<li>1</li>
+				<li>2</li>
+				<li>3</li>
+				<li>0</li>
+				<li>.</li>
+				<li id="equal">=</li>
+			</ul>
+		</div>
+
+	</body>
+</html>

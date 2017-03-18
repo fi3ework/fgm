@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>3</title>
+	</head>
+	<style>
+		body{
+			text-align: center;
+		}
+		
+		button{
+			cursor: pointer;
+		}
+	</style>
+	<script>
+		window.onload = function () {
+			var btnEle = document.getElementsByTagName("button")[0];
+			btnEle.onclick = function () {
+				alert(parseInt(btnEle.innerHTML));
+				btnEle.innerHTML = parseInt(btnEle.innerHTML) + 1;
+			}
+
+        }
+
+	</script>
+	<body>
+		<button>0</button>
+	</body>
+</html>

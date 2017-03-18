@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>8</title>
+	</head>
+	<style>
+		#wrapper{
+			width: 270px;
+			margin: 20px auto 0 auto;
+			background-color: dimgray;
+		}
+
+		span{
+			color:#000;
+			line-height:2;
+			background:#fbfbfb;
+			border:2px solid #b4b4b4;
+			margin:0 10px;
+			padding:0 10px;
+		}
+	</style>
+	<script>
+		window.onload = function () {
+			var spanEles = document.querySelectorAll("#wrapper span");
+			getTime();
+			function getTime() {
+				var time = new Date();
+				var dateArr = [time.getHours(), time.getMinutes(), time.getSeconds()];
+				for (var i = 0; i < dateArr.length; i++){
+				    spanEles[i].innerHTML = formatTime(dateArr[i]);
+				}
+            }
+
+            function formatTime(time) {
+				return time.toString().replace(/^(\d)$/,"0$1");
+            }
+
+            setInterval(getTime, 1000);
+        }
+	</script>
+	<body>
+		<div id="wrapper">
+			<span></span>点<span></span>分<span></span>秒
+		</div>
+
+	</body>
+</html>

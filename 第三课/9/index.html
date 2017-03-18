@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>9</title>
+	</head>
+	<style>
+		#wrapper{
+			margin: 20px auto 0 auto;
+			width: 300px;
+			height: 90px;
+			background-color: black;
+			text-align: center;
+			padding: 20px;
+			color: #fff;
+		}
+
+		span{
+			width: 40px;
+			border: 2px solid dimgray;
+			background-color: lightgray;
+			padding: 5px 10px;
+			margin: 0 10px;
+		}
+		
+		button{
+			cursor: pointer;
+			display: block;
+			width: 283px;
+			height: 50px;
+			margin-top: 20px;
+			background: url("http://fgm.cc/learn/lesson3/img/btn-1.png") no-repeat;
+			background-position: 0 0;
+			border: 0;
+		}
+
+		button.timing{
+			background-position: 0 -50px;
+		}
+	</style>
+	<script>
+		window.onload = function () {
+			var toggleEle = document.getElementsByTagName("button")[0];
+            var minEle = document.querySelector("#wrapper span:first-of-type");
+            var secEle = document.querySelector("#wrapper span:nth-of-type(2)");
+            var lastSec = 100;
+            var id = null;
+            //
+			toggleEle.onclick = function () {
+				toggleEle.className = toggleEle.className == "" ? "timing" : "";
+				toggleEle.className ? start() : (clearInterval(id));
+            }
+
+            function start() {
+			    console.log("into start");
+				id = setInterval(function () {
+				    if (lastSec > 0){
+				        lastSec--;
+                    }
+					minEle.innerHTML = formatTime(parseInt(lastSec / 60));
+					secEle.innerHTML = formatTime(lastSec % 60);
+                }, 1000)
+            }
+
+            function formatTime(time) {
+				return time.toString().replace(/^(\d)$/,"0$1");
+            }
+
+        }
+	</script>
+	<body>
+		<div id="wrapper">
+			<span>01</span>分钟<span>40</span>秒
+			<button></button>
+		</div>
+	</body>
+</html>

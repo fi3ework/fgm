@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>4</title>
+	</head>
+	<style>
+		#wrapper{
+			width: 390px;
+			margin: 20px auto 0 auto;
+		}
+
+		input{
+			width: 40px;
+			background-color: #f0f0f0;
+			border: 1px solid dimgray;
+			margin: 20px;
+		}
+
+		span{
+			margin-left: 10px ;
+			color: red;
+		}
+	</style>
+	<script>
+		window.onload = function () {
+			var btnEle = document.querySelector("button");
+			var textEles = document.querySelectorAll("input");
+			var showEle = document.querySelector("#wrapper span:last-of-type");
+
+			btnEle.onclick = function () {
+			    if (textEles[0].value == ""|| textEles[1].value == "")
+				{
+				    alert("input sth plz");
+				    return;
+				}
+                showEle.innerHTML = Math.max(textEles[0].value, textEles[1].value);
+            }
+
+            for (var i = 0; i < textEles.length; i++){
+			    textEles[i].onkeyup = function () {
+					this.value = this.value.replace(/[^\d]/,"");
+                }
+			}
+        }
+	</script>
+	<body>
+		<div id="wrapper">
+			<input type="text"><span>VS</span><input type="text"><button>更大的数是</button><span></span>
+		</div>
+	</body>
+</html>

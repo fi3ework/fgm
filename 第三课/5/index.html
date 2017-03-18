@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>5</title>
+	</head>
+	<style>
+		p{
+			text-align: center;
+		}
+	</style>
+	<script>
+		window.onload = function () {
+			var ele = document.querySelector("p");
+			setInterval(plus,1000);
+			function plus() {
+				ele.innerHTML = parseInt(ele.innerHTML) + 1;
+            }
+        }
+	</script>
+	<body>
+		<p>1</p>
+	</body>
+</html>
