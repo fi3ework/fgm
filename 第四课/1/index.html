@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>1</title>
+	</head>
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+		}
+
+		#wrapper {
+			margin: 20px auto 0 auto;
+			width: 864px;
+			height: 36px;
+		}
+
+		#outerNav{
+			position: relative;
+			width: 866px;
+			height: 36px;
+			list-style-type: none;
+			background: url("http://fgm.cc/learn/lesson4/img/nav_bg.png") right -72px;
+		}
+
+		#wrapper li.outer{
+			float: left;
+			display: inline-block;
+			height: 36px;
+			width: 108px;
+			text-align: center;
+			background: url("http://fgm.cc/learn/lesson4/img/nav_bg.png") 0 -108px no-repeat;
+		}
+
+		#wrapper li.outer:first-of-type{
+			background: url("http://fgm.cc/learn/lesson4/img/nav_bg.png") 0 -36px;
+		}
+
+		#wrapper li.outer:last-of-type{
+			text-indent: 4px;
+			width: 102px;
+		}
+
+		#wrapper li.outer>a{
+			display: block;
+			margin-left: 4px;
+			width:102px;
+			height: 36px;
+			text-decoration: none;
+			line-height: 36px;
+			color: #f0f0f0;
+		}
+
+		#wrapper li.outer>a:hover{
+			background-image: url("http://fgm.cc/learn/lesson4/img/nav_bg.png");
+			background-position: -3px -144px;
+		}
+
+		/*inner*/
+		#wrapper ul.innerNav{
+			display: none;
+			position: absolute;
+			height: 27px;
+			/*min-width: 114px;*/
+			top: 41px;
+			/*width: auto!important;*/
+			padding-top: 4px;
+			/*background-color: red;*/
+			/*overflow: hidden;*/
+		}
+
+		#wrapper ul.innerNav li{
+			display: block;
+			float: left;
+			height: 27px;
+			background: url("http://fgm.cc/learn/lesson4/img/nav_bg.png") 0 -207px;
+		}
+
+		#wrapper li.inner:first-of-type{
+			width: 9px;
+			height: 27px;
+			/*background: red;*/
+			background: url("http://fgm.cc/learn/lesson4/img/nav_bg.png") left -180px;
+		}
+
+		#wrapper li.inner:nth-of-type(2){
+			position: absolute;
+			width: 60px;
+			height: 5px;
+			top: 0px;
+			/*left: 0px;*/
+			background:  url("http://fgm.cc/learn/lesson4/img/nav_bg.png") no-repeat 50px -261px;
+		}
+
+		#wrapper li.inner:last-of-type{
+			width: 10px;
+			background: url("http://fgm.cc/learn/lesson4/img/nav_bg.png") right -234px;
+		}
+
+		#wrapper li.inner a{
+			color: black;
+			font-size: 8px;
+			line-height: 27px;
+			text-decoration: none;
+			padding: 0 10px;
+			border-right: 1px solid dimgray;
+		}
+
+		#wrapper li.inner:nth-last-of-type(-n+2) a, #wrapper li.inner:nth-of-type(2) a{
+			border-right: none;
+		}
+
+		#wrapper li.inner>a:hover{
+			text-decoration: underline;
+		}
+
+	</style>
+	<script>
+		window.onload = function () {
+		    var outerNavEle = document.getElementById("outerNav");
+			var toggleEles = document.querySelectorAll("li.outer");
+			var innerNavEles = document.querySelectorAll("li.outer>ul");
+			var arrowEles = document.querySelectorAll("li.inner:nth-of-type(2)");
+			var timer = null;
+			for	(var i = 0; i < toggleEles.length; i++){
+                toggleEles[i].index = i;
+
+			    //onmouseover
+			    toggleEles[i].onmouseover = function () {
+                    //隐藏所有子菜单
+			        for (var j = 0; j < innerNavEles.length; j++){
+			            innerNavEles[j].style.display = "none";
+					}
+					clearTimeout(timer);
+
+        			innerNavEles[this.index].style.display = "block";
+                    outerNavEle.offsetWidth - this.offsetLeft > innerNavEles[this.index].offsetWidth ?
+        				innerNavEles[this.index].style.left = this.offsetLeft + "px" :
+						(console.log(innerNavEles[this.index].offsetWidth), innerNavEles[this.index].style.right = 0);
+                    this.index == 0 ? (1+1) : arrowEles[this.index - 1].style.left = this.offsetLeft - innerNavEles[this.index].offsetLeft + 1 + "px";
+                };
+
+//                innerNavEles.onmouseover = function (event)
+//                {
+//                    (event || window.event).cancelBubble = true;
+//                    clearTimeout(timer)
+//                }
+
+                //onmouseout
+                toggleEles[i].onmouseout = function () {
+                    var self = this;
+                    timer = setTimeout(function () {
+                        innerNavEles[self.index].style.display = "none";
+                    }, 300);
+                }
+			}
+        }
+	</script>
+	<body>
+		<div id="wrapper">
+			<ul id="outerNav">
+				<li class="outer">
+					<a href="#">站长之家</a>
+					<ul class="innerNav">
+					</ul>
+				</li>
+				<li class="outer"><a href="#">行业资讯</a>
+					<ul class="innerNav">
+						<li class="inner"><a href="#"></a></li>
+						<li class="inner"><a href="#"></a></li>
+						<li class="inner"><a href="#">业界动态</a></li>
+						<li class="inner"><a href="#">收购融资</a></li>
+						<li class="inner"><a href="#">门户动态</a></li>
+						<li class="inner"><a href="#">搜索引擎</a></li>
+						<li class="inner"><a href="#">网络游戏</a></li>
+						<li class="inner"><a href="#">电子商务</a></li>
+						<li class="inner"><a href="#">广告传媒</a></li>
+						<li class="inner"><a href="#">厂商开发</a></li>
+						<li class="inner"><a href="#"></a></li>
+					</ul>
+				</li>
+				<li class="outer"><a href="#">站长在线</a>
+					<ul class="innerNav">
+						<li class="inner"><a href="#"></a></li>
+						<li class="inner"><a href="#"></a></li>
+						<li class="inner"><a href="#">站长报到</a></li>
+						<li class="inner"><a href="#">好战推荐</a></li>
+						<li class="inner"><a href="#">站长聚会</a></li>
+						<li class="inner"><a href="#">站站房谈</a></li>
+						<li class="inner"><a href="#">沾沾茶馆</a></li>
+						<li class="inner"><a href="#">网络排行</a></li>
+						<li class="inner"><a href="#"></a></li>
+					</ul>
+				</li>
+				<li class="outer"><a href="#">网站运营</a>
+					<ul class="innerNav">
+						<li class="inner"><a href="#"></a></li>
+						<li class="inner"><a href="#"></a></li>
+						<li class="inner"><a href="#">建站经验</a></li>
+						<li class="inner"><a href="#">策划盈利</a></li>
+						<li class="inner"><a href="#">搜索优化</a></li>
+						<li class="inner"><a href="#">网站推广</a></li>
+						<li class="inner"><a href="#">免费资源</a></li>
+						<li class="inner"><a href="#"></a></li>
+					</ul>
+				</li>
+				<li class="outer"><a href="#">设计在线</a>
+					<ul class="innerNav">
+						<li class="inner"><a href="#"></a></li>
+						<li class="inner"><a href="#"></a></li>
+						<li class="inner"><a href="#">酷站推荐</a></li>
+						<li class="inner"><a href="#">网页设计</a></li>
+						<li class="inner"><a href="#">WEB标准</a></li>
+						<li class="inner"><a href="#">视频处理</a></li>
+						<li class="inner"><a href="#">设计活动</a></li>
+						<li class="inner"><a href="#"></a></li>
+					</ul>
+				</li>
+				<li class="outer"><a href="#">网络编程</a>
+					<ul class="innerNav">
+						<li class="inner"><a href="#"></a></li>
+						<li class="inner"><a href="#"></a></li>
+						<li class="inner"><a href="#">Asp编程</a></li>
+						<li class="inner"><a href="#">Php编程</a></li>
+						<li class="inner"><a href="#">.Net编程</a></li>
+						<li class="inner"><a href="#">XML编程</a></li>
+						<li class="inner"><a href="#">Access</a></li>
+						<li class="inner"><a href="#">Mssql</a></li>
+						<li class="inner"><a href="#">Mysql</a></li>
+						<li class="inner"><a href="#"></a></li>
+					</ul>
+				</li>
+				<li class="outer"><a href="#">联盟资讯</a>
+					<ul class="innerNav">
+						<li class="inner"><a href="#"></a></li>
+						<li class="inner"><a href="#"></a></li>
+						<li class="inner"><a href="#">联盟动态</a></li>
+						<li class="inner"><a href="#">联盟介绍</a></li>
+						<li class="inner"><a href="#">联盟点评</a></li>
+						<li class="inner"><a href="#">网赚技巧</a></li>
+						<li class="inner"><a href="#"></a></li>
+					</ul>
+				</li>
+				<li class="outer"><a href="#">服务器</a>
+					<ul class="innerNav">
+						<li class="inner"><a href="#"></a></li>
+						<li class="inner"><a href="#"></a></li>
+						<li class="inner"><a href="#">Web服务器</a></li>
+						<li class="inner"><a href="#">Ftp服务器</a></li>
+						<li class="inner"><a href="#">Mail服务器</a></li>
+						<li class="inner"><a href="#">Dns服务器</a></li>
+						<li class="inner"><a href="#">Win服务器</a></li>
+						<li class="inner"><a href="#">Linux服务器</a></li>
+						<li class="inner"><a href="#">安全防护</a></li>
+						<li class="inner"><a href="#">虚拟主机</a></li>
+						<li class="inner"><a href="#"></a></li>
+					 </ul>
+				</li>
+			</ul>
+		</div>
+	</body>
+</html>

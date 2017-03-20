@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>3</title>
+	</head>
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+		}
+
+		body{
+			background-color: dimgray;
+		}
+
+		#wrapper{
+			position: relative;
+			width: 510px;
+			height: 190px;
+			margin: 20px auto 0;
+			background-color: white;
+			border-radius: 5px;
+			overflow: hidden;
+
+		}
+
+		#wrapper img{
+			display: block;
+			margin: 10px 0 0 10px;
+			border: 1px solid lightgray;
+		}
+
+		#wrapper ul{
+			position: absolute;
+			list-style-type: none;
+			right: 5px;
+			bottom: 15px;
+		}
+
+		#wrapper li{
+			float: left;
+			width: 20px;
+			height: 20px;
+			background-color: yellowgreen;
+			border-radius: 10px;
+			text-align: center;
+			margin-right: 10px;
+			color: #fff;
+			font: bold 6px/20px Arial;
+			cursor: pointer;
+		}
+	</style>
+	<script>
+		window.onload = function () {
+			var numEles = document.querySelectorAll("#wrapper ul li");
+			var showEle = document.querySelector("img");
+			var index = 1;
+			var timer = null;
+			var opacityTimer = null;
+			var wrapperEle = document.querySelector("#wrapper");
+			var isInv = 1;
+
+			autoPlay();
+
+			//切换index
+			function getNext() {
+				if (index == 1){
+				    isInv = 1;
+				}
+				if (index == 5){
+				    isInv = -1;
+				}
+				index += isInv;
+            }
+
+            //改变颜色
+			function changeColor() {
+                for (var k = 0; k < numEles.length; k++){
+                    numEles[k].style.backgroundColor = k + 1 == index ? "orange" : "yellowgreen";
+                }
+            }
+
+            //计时
+			function autoPlay() {
+                changeColor();
+                timer = setInterval(function () {
+                    getNext();
+                    changeSlowly(index);
+                    //清空其他颜色
+//                    changeColor()
+                }, 2000);
+            }
+
+			//onmouseover
+			for (var i = 0; i < numEles.length; i++){
+			    numEles[i].index = i;
+			    numEles[i].onmouseover = function () {
+					clearInterval(timer);
+					clearInterval(opacityTimer);
+					(index == (this.index + 1)) || (index = this.index + 1, changeSlowly(index));
+			        index = this.index + 1;
+                }
+			}
+
+            wrapperEle.onmouseover = function () {
+                clearInterval(timer);
+            };
+
+
+			//onmouserout() {
+			wrapperEle.onmouseout = function () {
+				autoPlay();
+			}
+
+            //淡入淡出效果
+			function changeSlowly(nextIndex) {
+                changeColor();
+                showEle.src = "http://fgm.cc/learn/lesson4/img/0" + nextIndex + ".jpg";
+                showEle.style.opacity = 0;
+                var opacity = 0;
+                opacityTimer = setInterval(function () {
+					opacity += 3;
+					opacity > 100 && (opacity = 100);
+					showEle.style.opacity = opacity / 100;
+					opacity == 100 && clearInterval(opacityTimer);
+                }, 20);
+            }
+        }
+	</script>
+	<body>
+		<div id="wrapper">
+			<img src="http://fgm.cc/learn/lesson4/img/01.jpg">
+			<ul>
+				<li>1</li>
+				<li>2</li>
+				<li>3</li>
+				<li>4</li>
+				<li>5</li>
+			</ul>
+		</div>
+	</body>
+</html>
