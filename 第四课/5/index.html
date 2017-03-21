@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>5</title>
+	</head>
+	<style>
+
+		*{
+			margin: 0;
+			padding: 0;
+		}
+
+		#wrapper{
+			margin: 20px auto 0;
+			width: 500px;
+			height: 120px;
+			background-color: orange;
+			padding: 10px;
+			border: 1px solid orangered;
+		}
+
+		#wrapper span{
+			/*display: inline-block;*/
+			padding: 5px;
+			background-color: red;
+			margin-right: 10px;
+			font: bold 8px Arial;
+			color: white;
+			cursor: pointer;
+		}
+	</style>
+	<script>
+
+		function getSetCSS(obj, attr, value) {
+			switch (arguments.length)
+			{
+				case 2:
+				    if (typeof arguments[1] == "object") {
+						for (var i in attr){
+						    obj.style[i] = attr[i];
+						    console.log(attr[i]);
+						}
+					} else {
+				        return obj.currentStyle ? obj.currentStyle[attr] : getComputedStyle(obj, null)[attr];
+					}
+					break;
+				case 3:
+				    obj.style[attr] = value;
+				    break;
+				default:
+				    alert("调用错误");
+
+
+			}
+        }
+
+
+		window.onload = function () {
+		    var showDiv = document.getElementById("wrapper");
+			var getEle = document.getElementById("getStyle");
+			var setEle = document.getElementById("setStyle");
+			var resetEle = document.getElementById("defaultStyle");
+			var btnEles = document.getElementsByTagName("span");
+			getEle.onclick = function () {
+                alert("width: " + getSetCSS(showDiv, "width") + "\nheight: " + getSetCSS(showDiv, "height") + "\nbackground-color: " + getSetCSS(showDiv, "backgroundColor"))
+
+            };
+
+            setEle.onclick = function () {
+                getSetCSS(showDiv, {width: "330px", height: "100px", borderColor: "#0084ff", backgroundColor: "#eff8ff"});
+				for (var i = 0; i < btnEles.length; i++){
+				    getSetCSS(btnEles[i], "backgroundColor", "#0084ff")
+				}
+            };
+
+            resetEle.onclick = function () {
+                getSetCSS(showDiv, {width: "500px", height: "120px", borderColor: "oranged", backgroundColor: "orange"});
+                for (var i = 0; i < btnEles.length; i++){
+                    getSetCSS(btnEles[i], "backgroundColor", "red")
+                }
+            };
+
+        }
+	</script>
+	<body>
+		<div id="wrapper">
+			<span id="getStyle">Get Style</span>
+			<span id="setStyle">Set Style</span>
+			<span id="defaultStyle">Default Style</span>
+		</div>
+	</body>
+</html>
