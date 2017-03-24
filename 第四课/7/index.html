@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>7</title>
+	</head>
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+		}
+
+		p{
+			margin: 10px;
+			padding: 20px;
+			color: cadetblue;
+			background-color: #f0f0f0;
+			border: 1px gray dashed;
+			word-wrap: break-word;
+		}
+
+		button{
+			margin-left: 10px;
+			padding: 2px;
+		}
+	</style>
+	<script>
+		window.onload = function () {
+            var pEles = document.getElementsByTagName("p");
+            var pEle1 = pEles[0];
+            var pEle2 = pEles[1];
+            var pEle3 = pEles[2];
+
+            String.prototype.toArray = function () {
+                var outVar = this.split(",");
+//                console.log(outVar);
+                return outVar;
+            };
+
+            //删除Jan
+            var arr1 = pEle1.innerHTML.toArray();
+            document.getElementById("remove1").onclick = function () {
+				var targetStr = "January(1)";
+				if(arr1.indexOf(targetStr) != -1){
+				    arr1.splice(arr1.indexOf(targetStr), 1);
+				    pEle1.innerHTML = arr1.join();
+				    this.innerHTML  = this.innerHTML.replace("删除", "添加");
+				} else {
+				    arr1.unshift("January(1)")
+				    pEle1.innerHTML = arr1;
+                    this.innerHTML  = this.innerHTML.replace("添加", "删除");
+				}
+            };
+
+            //删除Dec
+            document.getElementById("remove12").onclick = function () {
+                var targetStr = "December(12)";
+                if(arr1.indexOf(targetStr) != -1){
+                    arr1.splice(arr1.indexOf(targetStr), 1);
+                    pEle1.innerHTML = arr1.join();
+                    this.innerHTML  = this.innerHTML.replace("删除", "添加");
+                } else {
+                    arr1.push("December(12)")
+                    pEle1.innerHTML = arr1;
+                    this.innerHTML  = this.innerHTML.replace("添加", "删除");
+                }
+            };
+
+            //复制
+			var arr2 = pEle2.innerHTML.toArray();
+			document.getElementById("copy").onclick = function () {
+				var temp = pEle2.innerHTML.toArray().concat(pEle2.innerHTML.toArray());
+				console.log(temp);
+				pEle2.innerHTML = temp.join();
+             };
+
+			//重置
+            document.getElementById("reset").onclick = function () {
+                pEle2.innerHTML = arr2.join();
+            };
+
+
+
+
+//            function toArray(str) {
+//                var outVar = str.split(",");
+//                console.log(outVar);
+//                return outVar;
+//            }
+
+            //reset2
+            var pEle3Copy = pEle3.innerHTML;
+            document.getElementById("reset2").onclick = function () {
+                pEle3.innerHTML = pEle3Copy;
+            };
+
+            //删除前三
+            document.getElementById("removeFirst3").onclick = function () {
+                var curr = pEle3.innerHTML.toArray();
+                curr.splice(0, 3).join();
+                pEle3.innerHTML = curr.join();
+            };
+
+            //删除23
+            document.getElementById("remove23").onclick = function () {
+                var curr = pEle3.innerHTML.toArray();
+                curr.splice(1, 2).join();
+                pEle3.innerHTML = curr.join();
+            };
+
+            //强势插入
+            document.getElementById("insertAfter2").onclick = function () {
+                var curr = pEle3.innerHTML.toArray();
+                curr.splice(2, 0, "orange", "purple").join();
+                pEle3.innerHTML = curr.join();
+            };
+
+            //强势插入
+            document.getElementById("replace23").onclick = function () {
+                var curr = pEle3.innerHTML.toArray();
+                curr.splice(1, 2, "#009900", "#0000ff").join();
+                pEle3.innerHTML = curr.join();
+            };
+        }
+
+
+
+
+
+
+
+	</script>
+	<body>
+		<p>January(1),February(2),March(3),April(4),May(5),June(6),July(7),Aguest(8),September(9),October(10),November(11),December(12)</p>
+		<button id="remove1">删除January(1)</button>
+		<button id="remove12">删除December(12)</button>
+		<p>0,1,2,3,4,5,6,7,8,9</p>
+		<button id="copy">复制</button>
+		<button id="reset">还原</button>
+		<p>red,green,blue,white,yellow,black,brown</p>
+		<button id="reset2">还原</button>
+		<button id="removeFirst3">删除前三</button>
+		<button id="remove23">删除第二至第三</button>
+		<button id="insertAfter2">第二项后插入(orange, purple)</button>
+		<button id="replace23">替换第二和第三</button>
+	</body>
+</html>

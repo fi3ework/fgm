@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>6</title>
+	</head>
+	<style>
+		*{
+			margin: 0 ;
+			padding: 0;
+		}
+
+		#wrapper{
+			margin: 0 auto 20px;
+			height: 140px;
+			width: 400px;
+			border: 2px solid orangered;
+			background-color: rosybrown;
+		}
+
+		#wrapper p{
+			height: 30px;
+			background-color: orange;
+			border-bottom: 2px solid orangered;
+			color: orangered;
+			line-height: 30px;
+		}
+
+		#wrapper div{
+			margin-top: 20px;
+		}
+
+		#wrapper div div{
+			margin: 10px auto;
+			width: 200px;
+			text-align: right;
+		}
+
+		#wrapper input{
+			border: none;
+			height: 30px;
+			background:url("http://fgm.cc/learn/lesson4/img/input.png") no-repeat;
+		}
+
+		#wrapper input:focus{
+			background:  pink;
+
+		}
+	</style>
+	<body>
+		<div id="wrapper">
+			<p>用户登录</p>
+			<div>
+				<div><label for="userName">用户名：</label><input type="text" id="userName"></div>
+				<div><label for="password">密码：</label><input type="text" id="password"></div>
+			</div>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>8</title>
+	</head>
+	<script>
+		var EventUtil = {
+		    addHandler : function (ele, event, handler) {
+		        ele.addEventListener ? ele.addEventListener(event, handler) : ele.attachEvent("on" + event, handler);
+            },
+
+			removeHandler : function (ele, event, handler) {
+				ele.removeEventListener ? ele.removeEventListener(event, handler) : ele.detachEvent("on" + event, handler);
+            },
+
+            addLoadHandler : function (ele, handler) {
+				this.addHandler(ele, "load", handler);
+            }
+		};
+
+		EventUtil.addLoadHandler(window, function () {
+            var showEle = document.getElementById("show");
+            var bindEle = document.getElementById("bind");
+            var unbindEle = document.getElementById("unbind");
+
+            function showSth() {
+                alert("i'm wide awake");
+            }
+
+            EventUtil.addHandler(bindEle, "click", function () {
+                EventUtil.addHandler(showEle, "click", showSth);
+                showEle.innerHTML = "我可以点了哦";
+            });
+
+            EventUtil.addHandler(unbindEle, "click", function () {
+                EventUtil.removeHandler(showEle, "click", showSth);
+                showEle.innerHTML = "我大概废了";
+            })
+        })
+
+
+
+	</script>
+	<body>
+		<button id="show">毫无用处的按钮</button>
+		<button id="bind">绑定click</button>
+		<button id="unbind">解除绑定</button>
+	</body>
+</html>
