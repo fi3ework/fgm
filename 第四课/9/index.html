@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>9</title>
+	</head>
+	<style>
+		*{
+		    padding: 0;
+			margin: 0;
+		}
+
+		#wrapper {
+			position: relative;
+			height: 30px;
+			width: 400px;
+			margin: 20px auto 0;
+			/*background-color: gray;*/
+		}
+
+		ul{
+			font-family: Arial;
+			font-size: 6px;
+			overflow: hidden;
+			/*background-color: yellow;*/
+			/*margin-top: 30px ;*/
+			display: inline-block;
+		}
+
+		div>span{
+			vertical-align: top;
+			line-height: 30px;
+		}
+
+		strong{
+			color: orangered;
+		}
+
+		p>strong{
+			display: block;
+		}
+
+		ul li{
+			margin-top: 5px;
+			height: 19px;
+			width: 19px;
+			display: block;
+			float: left;
+			cursor: pointer;
+			padding-right: 3px;
+			/*background-color: greenyellow;*/
+			background: url("http://fgm.cc/learn/lesson4/img/star.png") no-repeat;
+		}
+
+		p{
+			word-wrap: break-word;
+			padding-top: 10px;
+			/*vertical-align: middle;*/
+			font: 12px/1.5 Arial;
+			position: absolute;
+			/*border: 1px solid lightgray;*/
+			border-radius: 6px;
+			display: none;
+			top: 30px;
+			height: 60px;
+			width: 159px;
+			padding: 7px 10px 0px;
+			background: url("http://fgm.cc/learn/lesson4/img/icon.gif") no-repeat;
+		}
+
+	</style>
+	<script>
+		window.onload = function () {
+			var liEles = document.querySelectorAll("ul li");
+		    var desEle = document.querySelector("div span:last-of-type");
+		    var tipEle = document.querySelector("p");
+			var level = -1;
+            var aMsg = [
+                "很不满意|差得太离谱，与卖家描述的严重不符，非常不满",
+                "不满意|部分有破损，与卖家描述的不符，不满意",
+                "一般|质量一般，没有卖家描述的那么好",
+                "满意|质量不错，与卖家描述的基本一致，还是挺满意的",
+                "非常满意|质量非常好，与卖家描述的完全一致，非常满意"
+            ];
+
+
+			for (var i = 0; i < liEles.length; i++){
+			    liEles[i].index = i;
+			    //in
+			    liEles[i].onmouseover = function () {
+                    setStar(liEles, this.index);
+                    tipEle.style.display = "block";
+                    tipEle.style.left = (this.offsetLeft - 80) + "px";
+                    console.log(tipEle.offsetLeft);
+                    console.log(this.offsetLeft);
+                    //des
+                    tipEle.innerHTML = "<strong>" + (this.index + 1) + "分</strong> " + getFirstDes(aMsg[this.index], 1);
+                    tipEle.innerHTML += getFirstDes(aMsg[this.index], 2);
+                };
+
+                //out
+				liEles[i].onmouseout = function () {
+                    setStar(liEles, level);
+                    tipEle.style.display = "none";
+                };
+
+                //click
+				liEles[i].onclick = function () {
+					level = this.index;
+					desEle.innerHTML = "<strong>" + (this.index + 1) + "分</strong>（" + getFirstDes(aMsg[this.index], 2) + "）";
+                };
+
+			}
+
+
+			//get first description
+			function getFirstDes(des, partIndex) {
+				var matchResult = des.match(/(.*)\|(.*)/);
+				console.log(matchResult);
+				return partIndex == 1 ? matchResult[1] : matchResult[2];
+            }
+
+			//set star
+			function setStar(eles, level) {
+                for (var j = 0; j <= level; j++){
+                    eles[j].style.backgroundPosition = "0 -27px"
+                }
+                for (var k = level + 1; k < eles.length; k++){
+                    eles[k].style.backgroundPosition = "";
+                }
+            }
+
+            //
+
+        }
+	</script>
+	<body>
+		<div id="wrapper">
+			<span>点击星星就能打分</span>
+			<ul>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+			</ul>
+			<span></span>
+			<p></p>
+		</div>
+	</body>
+</html>
