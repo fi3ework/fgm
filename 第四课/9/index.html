@@ -74,6 +74,7 @@
 			var liEles = document.querySelectorAll("ul li");
 		    var desEle = document.querySelector("div span:last-of-type");
 		    var tipEle = document.querySelector("p");
+		    var ulEle = document.querySelector("ul");
 			var level = -1;
             var aMsg = [
                 "很不满意|差得太离谱，与卖家描述的严重不符，非常不满",
@@ -83,16 +84,64 @@
                 "非常满意|质量非常好，与卖家描述的完全一致，非常满意"
             ];
 
+            //EventUtil
+            var EventUtil = {
+                addHandler : function (element, type, handler) {
+                    if(element.addEventListener){
+                        element.addEventListener(type, handler, false);
+                    } else if (element.attachEvent){
+                        element.attachEvent("on" + type, handler);
+                    } else {
+                        element["on" + type] = handler;
+                    }
+                },
+
+                removeHandler : function (element, type, handler) {
+                    if (element.removeEventListener){
+                        element.removeEventListener(type, handler, false);
+                    } else if (element.detachEvent) {
+                        element.detachEvent("on" + type, handler);
+                    } else {
+                        element["on" + type] = null;
+                    }
+                },
+
+                getEvent : function (event) {
+                    return event ? event : window.event;
+                },
+
+                getTarget : function (target) {
+                    return target || event.srcElement;
+                },
+
+                preventDefault : function (event) {
+                    if (event.preventDefault){
+                        event.preventDefault();
+                    } else {
+                        event.returnValue = false;
+                    }
+                },
+
+                stopPropagation : function (event) {
+                    if (event.stopPropagation){
+                        event.stopPropagation();
+                    } else {
+                        event.cancelBubble = true;
+                    }
+                }
+
+            };
 
 			for (var i = 0; i < liEles.length; i++){
 			    liEles[i].index = i;
-			    //in
-			    liEles[i].onmouseover = function () {
+//			    in
+			    liEles[i].onmouseover = function (event) {
+			        console.log(event.currentTarget);
                     setStar(liEles, this.index);
                     tipEle.style.display = "block";
                     tipEle.style.left = (this.offsetLeft - 80) + "px";
-                    console.log(tipEle.offsetLeft);
-                    console.log(this.offsetLeft);
+//                    console.log(tipEle.offsetLeft);
+//                    console.log(this.offsetLeft);
                     //des
                     tipEle.innerHTML = "<strong>" + (this.index + 1) + "分</strong> " + getFirstDes(aMsg[this.index], 1);
                     tipEle.innerHTML += getFirstDes(aMsg[this.index], 2);
@@ -105,18 +154,21 @@
                 };
 
                 //click
-				liEles[i].onclick = function () {
-					level = this.index;
+				liEles[i].onclick = function (event) {
+                    event.stopPropagation();
+                    level = this.index;
 					desEle.innerHTML = "<strong>" + (this.index + 1) + "分</strong>（" + getFirstDes(aMsg[this.index], 2) + "）";
                 };
 
 			}
 
 
+
+
 			//get first description
 			function getFirstDes(des, partIndex) {
 				var matchResult = des.match(/(.*)\|(.*)/);
-				console.log(matchResult);
+//				console.log(matchResult);
 				return partIndex == 1 ? matchResult[1] : matchResult[2];
             }
 
