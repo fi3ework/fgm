@@ -75,6 +75,7 @@
 		    var desEle = document.querySelector("div span:last-of-type");
 		    var tipEle = document.querySelector("p");
 		    var ulEle = document.querySelector("ul");
+		    var spanEle = document.querySelector("span");
 			var level = -1;
             var aMsg = [
                 "很不满意|差得太离谱，与卖家描述的严重不符，非常不满",
@@ -110,8 +111,8 @@
                     return event ? event : window.event;
                 },
 
-                getTarget : function (target) {
-                    return target || event.srcElement;
+                getTarget : function (event) {
+                    return event.target || event.srcElement;
                 },
 
                 preventDefault : function (event) {
@@ -132,41 +133,82 @@
 
             };
 
-			for (var i = 0; i < liEles.length; i++){
-			    liEles[i].index = i;
-//			    in
-			    liEles[i].onmouseover = function (event) {
-			        console.log(event.currentTarget);
-                    setStar(liEles, this.index);
-                    tipEle.style.display = "block";
-                    tipEle.style.left = (this.offsetLeft - 80) + "px";
+
+			for (var i = 0; i < liEles.length; i++) {
+				liEles[i].index = i;
+			}
+
+            EventUtil.addHandler(spanEle, "click", function (event) {
+				var target = EventUtil.getTarget(event);
+				console.log(target);
+            });
+
+            EventUtil.addHandler(ulEle, "mouseover", function (event) {
+				var currLi = EventUtil.getTarget(event);
+				if (currLi.tagName != "LI")
+					return;
+//			        console.log(event.currentTarget);
+				setStar(liEles, currLi.index);
+				tipEle.style.display = "block";
+				tipEle.style.left = (currLi.offsetLeft - 80) + "px";
 //                    console.log(tipEle.offsetLeft);
 //                    console.log(this.offsetLeft);
-                    //des
-                    tipEle.innerHTML = "<strong>" + (this.index + 1) + "分</strong> " + getFirstDes(aMsg[this.index], 1);
-                    tipEle.innerHTML += getFirstDes(aMsg[this.index], 2);
-                };
+				//des
+				tipEle.innerHTML = "<strong>" + (currLi.index + 1) + "分</strong> " + getFirstDes(aMsg[currLi.index], 1);
+				tipEle.innerHTML += getFirstDes(aMsg[currLi.index], 2);
+			});
 
-                //out
-				liEles[i].onmouseout = function () {
-                    setStar(liEles, level);
+            EventUtil.addHandler(ulEle, "mouseout", function () {
+                setStar(liEles, level);
                     tipEle.style.display = "none";
-                };
+                });
 
-                //click
-				liEles[i].onclick = function (event) {
-                    event.stopPropagation();
-                    level = this.index;
-					desEle.innerHTML = "<strong>" + (this.index + 1) + "分</strong>（" + getFirstDes(aMsg[this.index], 2) + "）";
-                };
+            EventUtil.addHandler(ulEle, "click", function (event) {
+				var currLi = EventUtil.getTarget(event);
+				if (currLi.tagName != "LI")
+					return;
+//                    event.stopPropagation();
+				level = currLi.index;
+				desEle.innerHTML = "<strong>" + (currLi.index + 1) + "分</strong>（" + getFirstDes(aMsg[currLi.index], 2) + "）";
+			});
 
-			}
+
+//			for (var i = 0; i < liEles.length; i++){
+//			    liEles[i].index = i;
+////			    in
+//			    liEles[i].onmouseover = function (event) {
+////			        console.log(event.currentTarget);
+//                    setStar(liEles, this.index);
+//                    tipEle.style.display = "block";
+//                    tipEle.style.left = (this.offsetLeft - 80) + "px";
+////                    console.log(tipEle.offsetLeft);
+////                    console.log(this.offsetLeft);
+//                    //des
+//                    tipEle.innerHTML = "<strong>" + (this.index + 1) + "分</strong> " + getFirstDes(aMsg[this.index], 1);
+//                    tipEle.innerHTML += getFirstDes(aMsg[this.index], 2);
+//                };
+//
+//                //out
+//				liEles[i].onmouseout = function () {
+//                    setStar(liEles, level);
+//                    tipEle.style.display = "none";
+//                };
+//
+//                //click
+//				liEles[i].onclick = function (event) {
+//                    event.stopPropagation();
+//                    level = this.index;
+//					desEle.innerHTML = "<strong>" + (this.index + 1) + "分</strong>（" + getFirstDes(aMsg[this.index], 2) + "）";
+//                };
+//
+//			}
 
 
 
 
 			//get first description
 			function getFirstDes(des, partIndex) {
+			    console.log(des);
 				var matchResult = des.match(/(.*)\|(.*)/);
 //				console.log(matchResult);
 				return partIndex == 1 ? matchResult[1] : matchResult[2];
