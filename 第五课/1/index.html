@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>1</title>
+	</head>
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+		}
+
+		body{
+			background:#23384e;
+			font:12px/1.5 Arial;
+		}
+
+		#wrapper{
+			position: relative;
+			margin: 20px auto 0;
+			height: 33px;
+			width: 300px;
+			background: url(http://fgm.cc/learn/lesson5/img/search.jpg) 0 -34px;
+		}
+
+		#mirrow{
+			height: 34px;
+			width: 50px;
+			background: url(http://fgm.cc/learn/lesson5/img/search.jpg) 0 0;
+			/*background-color: red;*/
+			/*opacity: 0.5;*/
+		}
+
+		form{
+			margin-left: 300px;
+			height: 34px;
+			width: 50px;
+			background: url(http://fgm.cc/learn/lesson5/img/search.jpg) right 0;
+		}
+
+		#select{
+			position: absolute;
+			top: 0px;
+			left: 50px;
+			color:#fff;
+			width:190px;
+			height:22px;
+			cursor:pointer;
+			margin-top:4px;
+			line-height:22px;
+			padding-left:10px;
+			background: url(http://fgm.cc/learn/lesson5/img/search.jpg) 0 -68px;
+		}
+
+		input{
+			position: absolute;
+			width:80px;
+			height:24px;
+			left: 250px;
+			border: none;
+			color:#333;
+			letter-spacing:4px;
+			line-height:22px;
+			text-align:center;
+			text-decoration:none;
+			background:url(http://fgm.cc/learn/lesson5/img/search.jpg)0 -90px;
+			margin:4px 0 0 10px;
+		}
+
+		input:hover{
+			color: orange;
+			background-position: -80px -90px;
+		}
+
+		input:focus{
+			outline: none;
+		}
+
+
+		ul{
+			display: none;
+			left: 51px;
+			top: 27px;
+			position: absolute;
+			list-style-type: none;
+			background-color: #222;
+			width: 196px;
+			color: white;
+			border: 1px solid white;
+		}
+
+		li{
+			line-height: 16px;
+			border-bottom: 1px dotted white;
+			height: 16px;
+			padding: 5px;
+			cursor: pointer;
+		}
+
+		li:last-of-type {
+			border-bottom: none;
+		}
+
+		li:hover{
+			background-color: darkgray;
+		}
+	</style>
+	<script>
+		window.onload = function () {
+            var ulEle = document.querySelector("ul");
+            var liEles = document.querySelectorAll("ul li")
+            var toggleEle = document.querySelector("#select");
+
+            toggleEle.onclick = function (event) {
+                ulEle.style.display = ulEle.style.display != "block" ? "block" : "none";
+                if (event.stopPropagation){
+                    event.stopPropagation();
+				} else {
+                    event.cancelBubble = true;
+				}
+            };
+
+
+			ulEle.addEventListener("click", function (event) {
+				var currLi = event.target;
+				console.log(currLi);
+				toggleEle.innerHTML = currLi.innerHTML
+			}, false);
+
+			document.onclick = function () {
+				ulEle.style.display = "none";
+            }
+        };
+
+
+
+
+	</script>
+	<body>
+		<div id="wrapper">
+			<div id="mirrow">
+				<form>
+					<input type="submit" value="搜索">
+					<span id="select">请选择游戏名称</span>
+				</form>
+			</div>
+			<ul id="sub">
+				<li>地下城与勇士</li>
+				<li>魔兽世界（国服）</li>
+				<li>魔兽世界（台服）</li>
+				<li>热血江湖</li>
+				<li>神鬼传奇</li>
+				<li>大话西游II</li>
+				<li>QQ幻想世界</li>
+			</ul>
+		</div>
+	</body>
+</html>

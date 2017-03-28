@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>test</title>
+	</head>
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		#outerouter{
+			background-color: #f0f0f0;
+			width: 600px;
+			height: 600px;
+			position: relative;
+		}
+
+		#outer{
+			float: left;
+			background-color: lightgray;
+			width: 300px;
+			height: 200px;
+		}
+
+		#inner{
+			/*float: left;*/
+			position: absolute;
+			top: 30px;
+			/*width: 400px;*/
+			/*width: auto!important;*/
+			left: 100px;
+			background-color: gray;
+			height: 50px;
+			line-height: 33px;
+		}
+
+		p{
+			background-color: red;
+			opacity: 0.3;
+		}
+
+		span{
+			/*display: block;*/
+		}
+
+		a{
+			/*display: inline;*/
+		}
+	</style>
+	<script>
+		function a1 (x) {
+			var n = 40;
+			n++;
+			console.log("inner = " + n);
+			function getN() {
+			    n += 2;
+			    console.log("in getN = " + n);
+				return n;
+            }
+
+            return getN;
+        };
+
+		var x1 = a1();
+		x1();
+		x1();
+
+		var x2 = a1();
+		x2();
+		x2();
+
+
+
+	</script>
+	<body>
+	<div id="outerouter">
+		<div id="outer">
+			<div id="inner">
+				<p><span><a>fu ck yo u</a><a>f uck y o u</a><a>f u c k y o u</a><a>fuck you</a></span></p>
+			</div>
+		</div>
+	</div>
+	</body>
+</html>

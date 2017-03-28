@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>5</title>
+	</head>
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+		}
+
+		#wrapper{
+			position: relative;
+			margin: 20px auto 0;
+			overflow: hidden;
+			/*background-color: yellow;*/
+			width: 780px;
+		}
+
+		ul{
+			list-style-type: none;
+		}
+
+		li{
+			display: block;
+			float: left;
+			margin-right: 20px;
+			line-height: 0;
+			cursor: pointer;
+		}
+
+		img{
+			border: 1px solid lightgray;
+		}
+
+		#bigShow{
+			display: none;
+			position: absolute;
+			width: 400px;
+			height: 400px;
+			border: 2px solid lightgray;
+			line-height: 0 ;
+		}
+
+		#bigShow img{
+			border: none;
+		}
+	</style>
+	<script>
+		window.onload = function () {
+
+            var showEle = document.getElementById("bigShow");
+            var ulEle = document.querySelector("ul");
+			var imgEles = document.querySelectorAll("li img");
+
+            var EventUtil = {
+                getEvent : function (event) {
+                    return event ? event : window.event;
+                },
+
+                addHandler : function (element, type, handler) {
+                    if (addEventListener){
+                        element.addEventListener(type, handler, false);
+                    } else {
+                        element.attachEvent("on" + type, handler);
+                    }
+                },
+
+				getTarget : function (event) {
+					return event.target || event.srcElement;
+                },
+
+				stopPropagation : function (event) {
+					if (event.stopPropagation){
+					    event.stopPropagation();
+					} else {
+					    event.cancelBubble = true;
+					}
+                }
+            };
+
+			EventUtil.addHandler(ulEle, "mouseover", function (event) {
+                var target = EventUtil.getTarget(event);
+                var event = EventUtil.getEvent(event);
+				if (target.tagName != "IMG"){
+				    return null;
+				}
+                showEle.style.display = "block";
+				console.log(showEle.display);
+				var imgEle = document.querySelector("#bigShow img");
+				var imgSrc = target.src.replace(".jpg", "_big.jpg");
+				imgEle.src = imgSrc;
+
+				// position
+				
+				// showEle.style.left = event.
+				showEle.style.left = event.clientX;
+//				console.log(event.clientX);
+				showEle.style.top = event.clientY;
+
+            });
+
+			EventUtil.addHandler(ulEle, "mousemove", function (event) {
+                var target = EventUtil.getTarget(event);
+                var event = EventUtil.getEvent(event);
+                if (target.tagName != "IMG"){
+                    return null;
+                }
+
+                var htmlWidth = document.documentElement.offsetWidth;
+                //position
+//				console.log(document.documentElement.offsetWidth);
+//				console.log(showEle.style.width);
+//				console.log(event.clientX);
+//                showEle.style.left = event.clientX + showEle.style.width + 10 < htmlWidth ?
+//					(event.clientX + 10 + "px", console.log(event.clientX + 10 + "px")) : htmlWidth - 10 - showEle.style.width + "px";
+//				console.log(10 + event.clientX + showEle.style.width );
+                if(10 + event.clientX + showEle.offsetWidth < htmlWidth){
+                    showEle.style.left = 10 + event.clientX + "px";
+//                    console.log(showEle.style.width);
+//                    console.log(10 + event.clientX + showEle.style.offsetWidth);
+				} else {
+                    console.log("ff");
+                    showEle.style.left = htmlWidth - showEle.offsetWidth + "px";
+//                    console.log(htmlWidth - 10 - showEle.style.width + "px");
+				}
+
+                console.log(typeof showEle.offsetWidth );
+                showEle.style.top = event.clientY + 10 + "px";
+            });
+
+			for (var i = 0; i < imgEles.length; i++){
+			    EventUtil.addHandler(imgEles[i], "mouseout", function (event) {
+			    	EventUtil.stopPropagation(event);
+					showEle.style.display = "none";
+                });
+			}
+
+        }
+	</script>
+	<body>
+		<div id="wrapper">
+			<ul>
+				<li><img src="http://fgm.cc/learn/lesson5/img/shirt_1.jpg"></li>
+				<li><img src="http://fgm.cc/learn/lesson5/img/shirt_2.jpg"></li>
+				<li><img src="http://fgm.cc/learn/lesson5/img/shirt_3.jpg"></li>
+				<li><img src="http://fgm.cc/learn/lesson5/img/shirt_4.jpg"></li>
+			</ul>
+		</div>
+		<div id="bigShow"><img><img></div>
+	</body>
+</html>

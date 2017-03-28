@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>3</title>
+	</head>
+	<style>
+		pre{
+			color:green;
+			margin: 20px;
+			padding:10px 15px;
+			background:#f0f0f0;
+			border:1px dotted #333;
+			font:12px/1.5 Courier New;
+		}
+
+		span{
+			color:#999;
+		}
+
+		p{
+			font-size: 44px;
+			text-align: center;
+		}
+	</style>
+	<script>
+        window.onload = function () {
+            var p = document.getElementsByTagName("p")[0];
+            document.onkeydown = function (event) {
+                event = event || window.event;
+                p.innerHTML = event.keyCode;
+//                return false;
+            };
+        }
+	</script>
+	<body>
+		<pre>
+&lt;script&gt;
+        window.onload = function () {
+            var p = document.getElementsByTagName("p")[0];
+            document.onkeydown = function (event) {
+                event = event || window.event;
+                p.innerHTML = event.keyCode;
+                return false;
+            };
+        }
+&lt;/script&gt;
+		</pre>
+		<p></p>
+		<input type="text">
+	</body>
+</html>
