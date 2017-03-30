@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>8</title>
+</head>
+<style>
+  div{
+    background-color: lightseagreen;
+    height: 200px;
+    width: 200px;
+    margin: 100px auto 0;
+    text-align: center;
+    line-height: 200px;
+    cursor: pointer;
+  }
+
+  div.blink{
+    background-color: aqua;
+    color: white;
+  }
+</style>
+<script>
+  window.onload = function(){
+    var ele = document.getElementsByTagName("div")[0];
+    var timer = null;
+    ele.onclick = function(){
+      var blinkTimes = 4;
+      clearTimeout(timer);
+      timer = setInterval(function(){
+        ele.className.indexOf("blink") == -1 ? ele.className = "blink" : 
+        (blinkTimes--, ele.className = "", blinkTimes == 0 && clearTimeout(timer));
+      }, 223);
+    }
+  }
+</script>
+<body>
+  <div>点击闪烁</div>
+</body>
+</html>
