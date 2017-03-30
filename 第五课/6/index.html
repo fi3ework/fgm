@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>6</title>
+    <style>
+      *{
+        margin: 0;
+        padding: 0;
+      }
+      
+      p{
+        text-align: center;
+      }
+
+      ul{
+        display: none;
+        position: absolute;
+        width: 100px;
+        list-style-type: none;
+        padding: 2px;
+        border: 1px solid gray;
+        border-radius: 3px;
+      }
+
+      li{
+        height: 24px;
+        padding-left: 24px;
+        background-color: red;
+        background: url(http://fgm.cc/learn/lesson5/img/ico.png) lightgray;        
+        background-repeat: no-repeat;
+        line-height: 24px;
+      }
+
+      span{
+        display: block;
+        height: 24px;
+        background-color: white;
+        padding-left: 10px;
+      }
+
+      li.cut{
+        background-position: 0 0;
+      }
+
+      li.copy{
+        background-position: 0 -24px;
+      }
+
+      li.paste{
+        background-position: 0 -48px;
+      }
+
+      span:hover{
+        background-color: gray;
+      }
+
+    </style>
+    <script>
+      window.onload = function(){
+        var ulEle = document.getElementsByTagName("ul")[0];
+        document.oncontextmenu = function(event){
+          event.preventDefault();
+          ulEle.style.display = "block";
+          //set position
+          console.log(typeof event.clientX);
+          ulEle.style.top  = event.clientY + 5 + "px";
+          if(event.clientX + ulEle.offsetWidth < document.documentElement.clientWidth){
+            ulEle.style.left = event.clientX + 5 + "px";
+          } else{
+            ulEle.style.left = event.clientX - 5 - ulEle.clientWidth + "px";
+          } 
+        }
+
+        ulEle.onclick = function(event){
+          event.stopPropagation();
+        }
+
+        document.onclick = function(){
+          document.getElementsByTagName("ul")[0].style.display = "none";
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <p>自定义的右键菜单</p>
+    <ul id="menu">
+      <li class="cut"><span>剪切</span></li> 
+      <li class="copy"><span>复制</span></li> 
+      <li class="paste"><span>粘贴</span></li> 
+    </ul>
+  </body>
+</html>
