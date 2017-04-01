@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>1</title>
+</head>
+<style>
+  *{
+    padding: 0;
+    margin: 0;
+  }
+
+  body{
+    background-color: black;
+  }
+
+  #wrapper{
+    position: absolute;
+    left: 300px;
+    top: 300px;
+    height: 150px;
+    width: 300px;
+    background-color: slategray;
+    border: 2px solid lightgray;
+    color: yellow;
+  }
+
+  #wrapper div{
+    background-color: dimgray;
+    border-bottom: 2px solid lightgray;
+    padding: 10px;
+    text-align: right;
+    cursor: move;
+  }
+  
+  #wrapper div span{
+    cursor: pointer;
+  }
+
+  #wrapper p{
+    padding-top: 15px;
+    padding-left: 20px;
+    text-align: left;
+  }
+
+  #wrapper p span{
+    color: white; 
+  }
+</style>
+<script>
+  window.onload = function(){
+    var bDragging = false;
+    var infoEles = document.querySelectorAll("#wrapper p span");
+    var draggingInfoEle = infoEles[0];
+    var offsetTopInfoEle = infoEles[1];
+    var offsetLeftInfoEle = infoEles[2];
+    var wrapperEle = document.getElementById("wrapper");
+    var dragBarEle = document.querySelector("#wrapper div");
+    var posArray = [{x: wrapperEle.offsetLeft, y: wrapperEle.offsetTop}];
+    updateInfo();
+    //set mousedown
+    var shiftX = shiftY = null;
+    dragBarEle.onmousedown = function(event){
+      bDragging = true;
+      shiftX = event.clientX - wrapperEle.offsetLeft;
+      shiftY = event.clientY - wrapperEle.offsetTop;
+      this.setCapture && this.setCapture();
+      updateInfo();
+    }
+
+    //set mousemove
+    document.onmousemove = function(event){
+      if(bDragging){
+        updateInfo();
+        console.log("into move");
+        wrapperEle.style.left =  - shiftX + event.clientX + "px" ;
+        wrapperEle.style.top = - shiftY + event.clientY + "px";
+
+        wrapperEle.offsetLeft <= 0 && (wrapperEle.style.left = 0 + "px");
+        wrapperEle.offsetTop <= 0 && (wrapperEle.style.top = 0 + "px");
+
+        wrapperEle.offsetLeft + wrapperEle.offsetWidth >= document.documentElement.clientWidth && (wrapperEle.style.left = document.documentElement.clientWidth - wrapperEle.offsetWidth + "px");
+
+        wrapperEle.offsetTop + wrapperEle.offsetHeight >= document.documentElement.clientHeight && (wrapperEle.style.top = document.documentElement.clientHeight - wrapperEle.offsetHeight + "px");
+
+        //record pos info
+        posArray.push({x: wrapperEle.offsetLeft, y: wrapperEle.offsetTop});
+      }
+    }
+
+    //set mouseup
+    dragBarEle.onmouseup = window.onblur = dragBarEle.onlosecapture =  function(event){
+      bDragging = false;
+      dragBarEle.releaseCapture && dragBarEle.releaseCapture();
+      updateInfo();
+    }
+
+    //update infos
+    function updateInfo(){
+      draggingInfoEle.innerHTML = bDragging;
+      offsetLeftInfoEle.innerHTML = wrapperEle.offsetLeft + "px";
+      offsetTopInfoEle.innerHTML  = wrapperEle.offsetTop + "px";
+    }
+    
+    //
+    document.getElementById("replay").onmousedown = function(){
+      event.stopPropagation();
+
+    }
+    //click replay
+    document.getElementById("replay").onclick = function(event){
+      if(posArray.length == 1)
+        return false;
+      var timerId = setInterval(function(){
+        posArray.length == 1 && clearInterval(timerId);
+        var currPos = posArray.pop();
+        wrapperEle.style.left = currPos.x + "px";
+        wrapperEle.style.top = currPos.y + "px";
+        updateInfo();
+      }, 20);
+    }
+  }
+</script>
+<body>
+  <div id="wrapper">
+    <div><span id="replay">点击回放拖动轨迹</span></div>
+    <p>Dragging: <span></span></p>
+    <p>offsetTop: <span></span></p>
+    <p>offsetLeft: <span></span></p>
+  </div>
+</body>
+</html>
