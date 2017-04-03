@@ -75,7 +75,8 @@
     border: 1px solid lightblue;
   }
 
-  #sender input, #sender textarea {
+  #sender input,
+  #sender textarea {
     font-size: 16px;
     color: dimgray;
     text-indent: 5px;
@@ -131,7 +132,7 @@
     color: #333;
   }
 
-  span.outRange{
+  span.outRange {
     color: orangered;
   }
 
@@ -153,10 +154,12 @@
     width: 100%;
     background-color: #fff;
     overflow: hidden;
+    padding-bottom: 13px;
+    border-radius: 0 0 10px 10px;
   }
 
   #tab {
-    width: 93%;
+    /*width: 93% - 2px;*/
     height: 30px;
     background-color: #E3EAEC;
     border: 1px #E1E1E1 solid;
@@ -191,7 +194,12 @@
     font-size: 14px;
     margin: 0 auto;
     padding: 10px;
+    /*padding-bottom: 0;*/
     border-bottom: 1px dashed lightgray;
+  }
+
+  .cell:hover {
+    background-color: #f0f0f0;
   }
 
   .cell img {
@@ -217,8 +225,23 @@
     margin-right: 5px;
   }
 
-  .cell a, .cell .content{
+  .cell a,
+  .cell .content {
     line-height: 16px;
+    word-wrap: break-word;
+  }
+
+  .cell .del {
+    display: none;
+    float: right;
+    padding-right: 10px;
+    color: #C4D9E9;   
+    font: 10px Arial;
+    cursor: pointer;    
+  }
+
+  .cell .del:hover {
+    text-decoration: underline;
   }
 
   .cell .date {
@@ -261,37 +284,38 @@
         </ul>
       </div>
       <ul id="cells">
-          <li class="cell">
-            <img src="http://fgm.cc/learn/lesson6/img/face.gif" />
-            <div class="msg">
-              <a href="javascript:;" class="userName">日丶久生情: </a><span class="content">增加了输入字符检测功能，英文/半角为半个字符，汉字/全角为一个字符。</span>
-              <p class="date">07月04日 08:30</p>
-            </div>
-          </li>
-          <li class="cell">
-            <img src="http://fgm.cc/learn/lesson6/img/face.gif" />
-            <div class="msg">
-              <a href="javascript:;" class="userName">日丶久生情: </a><span class="content">增加了输入字符检测功能，英文/半角为半个字符，汉字/全角为一个字符。</span>
-              <p class="date">07月04日 08:30</p>
-            </div>
-          </li>
-          <li class="cell">
-            <img src="http://fgm.cc/learn/lesson6/img/face.gif" />
-            <div class="msg">
-              <a href="javascript:;" class="userName">日丶久生情: </a><span class="content">增加了输入字符检测功能，英文/半角为半个字符，汉字/全角为一个字符。</span>
-              <p class="date">07月04日 08:30</p>
-            </div>
-          </li>
-          <li class="cell">
-            <img src="http://fgm.cc/learn/lesson6/img/face.gif" />
-            <div class="msg">
-              <a href="javascript:;" class="userName">日丶久生情: </a><span class="content">增加了输入字符检测功能，英文/半角为半个字符，汉字/全角为一个字符。</span>
-              <p class="date">07月04日 08:30</p>
-            </div>
-          </li>
+        <li class="cell">
+          <img src="http://fgm.cc/learn/lesson6/img/face.gif" />
+          <div class="msg">
+            <a href="javascript:;" class="userName">日丶久生情: </a><span class="content">增加了输入字符检测功能，英文/半角为半个字符，汉字/全角为一个字符。</span>
+            <p class="date">07月04日 08:30<a class="del">删除</a></p>
+          </div>
+        </li>
+        <li class="cell">
+          <img src="http://fgm.cc/learn/lesson6/img/face.gif" />
+          <div class="msg">
+            <a href="javascript:;" class="userName">日丶久生情: </a><span class="content">增加了输入字符检测功能，英文/半角为半个字符，汉字/全角为一个字符。</span>
+            <p class="date">07月04日 08:30<a class="del">删除</a></p>
+          </div>
+        </li>
+        <li class="cell">
+          <img src="http://fgm.cc/learn/lesson6/img/face.gif" />
+          <div class="msg">
+            <a href="javascript:;" class="userName">日丶久生情: </a><span class="content">增加了输入字符检测功能，英文/半角为半个字符，汉字/全角为一个字符。</span>
+            <p class="date">07月04日 08:30<a class="del">删除</a></p>
+          </div>
+        </li>
+        <li class="cell">
+          <img src="http://fgm.cc/learn/lesson6/img/face.gif" />
+          <div class="msg">
+            <a href="javascript:;" class="userName">日丶久生情: </a><span class="content">增加了输入字符检测功能，英文/半角为半个字符，汉字/全角为一个字符。</span>
+            <p class="date">07月04日 08:30<a class="del">删除</a></p>
+          </div>
+        </li>
       </ul>
     </div>
   </div>
   <script src="main.js"></script>
 </body>
+
 </html>
