@@ -76,10 +76,12 @@ function addAnimation(insertCell) {
   var timer = setInterval(function () {
     insertCell.style.height = parseInt(insertCell.style.height) + 5 + "px";
     console.log(insertCell.offsetHeight);
-    insertCell.offsetHeight >= insertHeight && clearInterval(timer);
+    insertCell.offsetHeight >= insertHeight &&
+      clearInterval(timer);
   }, 30)
   // console.log(insertHeight);
 }
+
 //clear input
 function clearInput() {
   nameEle.value = "";
@@ -148,36 +150,36 @@ function setDelClick() {
   }
 }
 
-//shrink padding 
-function shrinkPadding(cell) {
-  var timer2 = setInterval(function () {
-    // console.log(cell);
-    cell.style.paddingTop = parseInt(getCSS(cell, "paddingTop")) - 3 + "px";
-    cell.style.paddingBottom = parseInt(getCSS(cell, "paddingBottom")) - 3 + "px";
-    // console.log(cell.style.padding);
-    parseInt(getCSS(cell, "paddingBottom")) <= 2 &&
-      (cell.style.padding = "0",
-        cellsEle.removeChild(cell),
-        clearInterval(timer2));
-  }, 150);
-}
-
-// console.log(shrinkPadding());
-//set del function
+//del animation
 function delCell(cell) {
   //shrink height
   var timer1 = setInterval(function () {
-    cell.style.height = parseInt(getCSS(cell, "height")) - 6 + "px";
-    // console.log(cell.style.height);
-    if (parseInt(getCSS(cell, "height")) <= 5) {
-      cell.style.height = 0;
+    cell.style.opacity = getCSS(cell, "opacity") - 0.1;
+    console.log(getCSS(cell, "opacity"));
+    if (window.getComputedStyle(cell).opacity <= 0) {
+      cell.style.opacity = 0;
+      //shrink height
       clearInterval(timer1);
-      shrinkPadding(cell);
-      // clearInterval(timer2);
+      var timer2 = setInterval(function () {
+        cell.style.height = parseInt(getCSS(cell, "height")) - 6 + "px";
+        if (parseInt(getCSS(cell, "height")) <= 5) {
+          cell.style.height = 0;
+          clearInterval(timer2);
+          var timer3 = setInterval(function () {
+            // console.log(cell);
+            cell.style.paddingTop = parseInt(getCSS(cell, "paddingTop")) - 3 + "px";
+            cell.style.paddingBottom = parseInt(getCSS(cell, "paddingBottom")) - 3 + "px";
+            // console.log(cell.style.padding);
+            parseInt(getCSS(cell, "paddingBottom")) <= 2 &&
+              (cell.style.padding = "0",
+                cellsEle.removeChild(cell),
+                clearInterval(timer3));
+          }, 30);
+        }
+      }, 30);
     }
-  }, 150)
+  }, 30);
 }
-
 
 //format date
 function format(date) {

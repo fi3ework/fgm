@@ -99,7 +99,6 @@
     width: 100%;
     height: 95px;
     padding: 5px;
-    vertical-align: top;
     resize: none;
   }
 
@@ -235,9 +234,9 @@
     display: none;
     float: right;
     padding-right: 10px;
-    color: #C4D9E9;   
+    color: #C4D9E9;
     font: 10px Arial;
-    cursor: pointer;    
+    cursor: pointer;
   }
 
   .cell .del:hover {
@@ -250,12 +249,9 @@
     color: #C4D9E9;
   }
 </style>
-<script>
-</script>
-
 <body>
   <div id="wrapper">
-    <form id="sender" action="">
+    <form id="sender" action="#">
       <p>来，说说你在做什么，想什么</p>
       <div>
         <input type="text" id="name">
@@ -270,7 +266,7 @@
           <li><img src="http://fgm.cc/learn/lesson6/img/face8.gif"></li>
         </ul>
       </div>
-      <textarea type="text" class="content"></textarea>
+      <textarea class="content"></textarea>
       <div id="sendWrapper">
         <div class="floater"></div>
         <div id="broadcast"></div>
@@ -315,7 +311,7 @@
       </ul>
     </div>
   </div>
-  <script src="main.js"></script>
+<script src="main.js"></script>
 </body>
 
 </html>
