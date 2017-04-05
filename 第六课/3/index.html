@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>3</title>
+</head>
+<style>
+  * {
+    padding: 0;
+    margin: 0;
+    font-size: 12px;
+  }
+
+  p.intro {
+    text-align: center;
+  }
+
+  ul.ul-level-2,
+  ul.ul-level-3 {
+    display: none;
+  }
+
+  ul {
+    display: none;
+    /*left: 300px;*/
+    /*top: 300px;*/
+    position: absolute;
+    float: left;
+    /*overflow: hidden;*/
+    border: 1px solid dimgray;
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.6);
+    padding: 2px 2px 2px 20px;
+    list-style-type: none;
+    background: #f0f0f0;
+    cursor: pointer;
+    background: url(http://fgm.cc/learn/lesson6/img/line.png) #f0f0f0 repeat-y 20px 0;
+  }
+
+  .hasSub {
+    background: url(http://fgm.cc/learn/lesson6/img/arrow.png) no-repeat;
+    background-position-x: calc(100%);
+    background-position-y: 9px;
+  }
+
+  li {
+    /*position: absolute;*/
+    /*background-color: red;;*/
+    float: left;
+    clear: both;
+    padding: 5px 20px 5px 10px;
+    margin-left: 4px;
+    white-space: nowrap;
+    /*overflow: hidden;*/
+  }
+
+  li:hover {
+    background-color: lightblue;
+  }
+  /*level-2*/
+  /*#test {
+    display: block;
+    position: absolute;
+    left: 100px;
+    top: 100px;
+  }*/
+</style>
+<script>
+  window.onload = function () {
+    var liEles = document.getElementsByTagName("li");
+    var ulEles = document.getElementsByTagName("ul")
+    var level1Ul = document.getElementById("rightClickMenu");
+    var docWH = [document.documentElement.clientWidth, document.documentElement.clientHeight];
+    //set subarrow for li who has sub
+    function setSubArrow() {
+      for (var i = 0; i < liEles.length; i++) {
+        if (liEles[i].getElementsByTagName("ul").length != 0) {
+          liEles[i].classList.add("hasSub");
+          showSubMenu(liEles[i]);
+          hideSubMenu(liEles[i]);
+        }
+      }
+    }
+
+    //set width of li to the most wide li
+    function setToMaxWidth(ulEle) {
+      var currLiEles = ulEle.children;
+      var maxWidth = -1;
+      for (var i = 0; i < currLiEles.length; i++) {
+        currLiEles[i].tagName == "LI" &&
+          parseInt(window.getComputedStyle(currLiEles[i]).width) > maxWidth &&
+          (maxWidth = parseInt(window.getComputedStyle(currLiEles[i]).width));
+      }
+      for (var i = 0; i < currLiEles.length; i++) {
+        currLiEles[i].style.width = maxWidth + "px";
+      }
+    }
+
+    //show sub menu
+    function showSubMenu(liEle) {
+      liEle.addEventListener("mouseover", function () {
+        // if (liEle.id == "test-2")
+        var subMenu = liEle.getElementsByTagName("ul")[0];
+        // liEle.style.display = "block";
+        subMenu.style.display = "block";
+        console.log("show subMenu ");
+        console.log(subMenu);
+        // if (liEle.id == "test-2")
+        console.log("test-2 dis: " + document.querySelector("#test-2").style.display);
+        subMenu.style.position = "absolute";
+        setToMaxWidth(subMenu);
+        // console.log("before")
+        setSubMenuPosition(subMenu);
+        if (subMenu.id == "test") {
+          // console.log(window.getComputedStyle(subMenu).top);
+
+        }
+      })
+    }
+
+    //level menu
+    function hideSubMenu(liEle) {
+      liEle.addEventListener("mouseout", function () {
+      console.log('leveling-----')
+        // if (liEle.id == "test-2")
+        // console.log("out");
+        setTimeout(function () {
+          var subMenu = liEle.getElementsByTagName("ul")[0];
+          subMenu.style.display = "none";
+          // console.log("test-2 dis: " + document.querySelector("#test-2").style.display);
+        }, 300);
+
+
+      })
+    }
+
+    //set submenu position
+    function setSubMenuPosition(subMenu) {
+      var parentWidth = parseInt(subMenu.parentNode.parentNode.offsetWidth) - 1;
+      var parentY = parseInt(subMenu.parentNode.style.top) - 15;
+      subMenu.style.left = parentWidth - 40 + "px";
+      subMenu.style.top = parentY + "px";
+      if (subMenu.id == "test-3") {
+        console.log(subMenu.parentNode);
+        console.log(subMenu.parentNode.style.width);
+        console.log(subMenu.parentNode.offsetWidth);
+        console.log(window.getComputedStyle(subMenu.parentNode).width);
+        console.log("width " + parentWidth);
+        console.log(parentY);
+      }
+    }
+
+    //set right click menu
+    document.oncontextmenu = function (event) {
+      event.preventDefault();
+      var trueEvent = event || window.event;
+      level1Ul.style.display = "block";
+      setToMaxWidth(level1Ul);
+
+      var maxWidth = level1Ul.offsetWidth;
+      var maxHeight = level1Ul.offsetHeight;
+      // console.log(trueEvent.y);
+      // console.log(maxHeight);
+      // console.log(docWH[0]);
+      level1Ul.style.left = trueEvent.x + maxWidth > docWH[0] ? docWH[0] - maxWidth + "px" : trueEvent.x + "px";
+      level1Ul.style.top = trueEvent.y + maxHeight > docWH[1] ? docWH[1] - maxHeight + "px" : trueEvent.y + "px";
+      console.log(document.documentElement.clientHeight);
+      console.log(trueEvent.y);
+      console.log(level1Ul.style.top);
+    }
+
+    //init arrow
+    setSubArrow();
+    //end
+  }
+</script>
+
+<body>
+  <p class="intro">自定义的右键菜单</p>
+  <ul id="rightClickMenu">
+    <li>JavaScript 学习</li>
+    <li>
+      <p>第一课</p>
+      <ul class="ul-level-2">
+        <li>网页特效原理分析</li>
+        <li>响应用户操作</li>
+        <li>提示框效果</li>
+        <li>事件驱动</li>
+        <li>元素属性操作</li>
+      </ul>
+    </li>
+    <li>
+      <p>第二课</p>
+      <ul class="ul-level-2">
+        <li>改变网页背景颜色</li>
+        <li>函数传参</li>
+        <li>高重用性函数的编写</li>
+        <li>126邮箱全选效果</li>
+        <li>循环及遍历操作</li>
+      </ul>
+    </li>
+    <li>
+      <p>第三课</p>
+      <ul class="ul-level-2">
+        <li id="test-2">
+          JavaScript组成
+          <ul class="ul-level-3" id="test-3">
+            <li>ECMAScript</li>
+            <li>DOM</li>
+            <li>BOM</li>
+            <li>JavaScript兼容性来源</li>
+          </ul>
+        </li>
+        <li>JavaScript出现的位置、优缺点</li>
+        <li>变量、类型、typeof、数据类型转换、变量作用域</li>
+        <li>
+          闭包
+          <ul class="ul-level-3">
+            <li>什么是闭包</li>
+            <li>简单应用</li>
+            <li>闭包缺点</li>
+          </ul>
+        </li>
+        <li>运算符</li>
+        <li>程序流程控制</li>
+        <li>
+          定时器的使用
+          <ul class="ul-level-3">
+            <li>setInterval</li>
+            <li>setTimeout</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</body>
+
+</html>
