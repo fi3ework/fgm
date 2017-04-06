@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>1</title>
+</head>
+<style>
+  * {
+    padding: 0;
+    margin: 0;
+  }
+
+  ul li{
+    list-style-type: none;
+  }
+
+  body {
+    background-color: dimgray;
+  }
+
+  #wrapper {
+    position: relative;
+    width: 510px;
+    height: 190px;
+    margin: 20px auto 0;
+    border-radius: 5px;
+    background-color: #fff;
+    overflow: hidden;
+  }
+
+  #imgs,
+  #show {
+    width: 490px;
+    height: 170px;
+  }
+
+  #show {
+    overflow: hidden;
+  }
+
+  #show {
+    position: relative;
+    margin: 10px auto 0;
+  }
+
+  #imgs {
+    position: relative;
+  }
+
+  #imgs li {
+    float: left;
+    clear: both;
+    overflow: hidden;
+    font-size: 0;
+  }
+
+  #list {
+    position: absolute;
+    right: 10px;
+    bottom: 18px;
+  }
+
+  #list li {
+    font-size: 0;
+    display: block;
+    float: left;
+    height: 20px;
+    width: 20px;
+    margin-right: 6px;
+    border-radius: 20px;
+    background-color: orangered;
+    font: bold 12px Arial;
+    color: #fff;
+    text-indent: 7px;
+    line-height: 20px;
+    opacity: 0.5;
+    filter:alpha(opacity=70);
+    cursor: pointer;
+  }
+
+  #list .currIndex {
+    opacity: 1;
+  }
+</style>
+<script>
+  window.onload = function () {
+    //util
+    var util = {
+      getCompute: function (ele, style) {
+        return parseInt(window.getComputedStyle(ele)[style]);
+      }
+    }
+
+    var ulEle = document.getElementById("imgs");
+    var imgEles = document.querySelectorAll("#imgs img");
+    var listEles = document.querySelectorAll("#list li");
+    var imgHeight = util.getCompute(imgEles[0], "height");
+    var bForward = 1;
+    var gIndex = 1;
+    var timer2;
+    var timerID;
+    //set index
+    for (var i = 0; i < imgEles.length; i++) {
+      imgEles[i].index = i;
+    }
+
+    //toggle img
+    function toggleImg(ulEle, currIndex) {
+      clearInterval(timerID);
+      timerID = setInterval(function () {
+        var currTop = util.getCompute(ulEle, "top");
+        var currDelta = (-currIndex * imgHeight - currTop) / 10;
+        // Math.abs(currDelta) < 1 && (currDelta = Math.sign(currDelta));
+        currDelta = currDelta > 0 ? Math.ceil(currDelta) : Math.floor(currDelta);
+        ulEle.style.top = util.getCompute(ulEle, "top") + currDelta + "px";
+        //clear interval
+        if (util.getCompute(ulEle, "top") == -currIndex * imgHeight) {
+          clearInterval(timerID);
+          //set hover
+          gIndex == imgEles.length - 1 && (bForward = -1);
+          gIndex == 0 && (bForward = 1);
+          gIndex += bForward;
+        }
+      }, 30)
+    }
+
+    //set normal flip
+    function startMove() {
+      timer2 = setInterval(function () {
+        toggleImg(ulEle, gIndex);
+      }, 2000);
+    }
+    startMove();
+
+
+    for (var i = 0; i < listEles.length; i++) {
+      listEles[i].index = i;
+      listEles[i].onmouseover = function () {
+        gIndex = this.index;
+        this.className = "currIndex";
+        toggleImg(ulEle, gIndex);
+        clearInterval(timer2);
+        // clearInterval(timerID);
+      }
+
+      listEles[i].onmouseout = function(){
+        this.className = "";
+        startMove();        
+      }
+    }
+  }
+
+  //
+</script>
+
+<body>
+  <div id="wrapper">
+    <div id="show">
+      <ul id="imgs">
+        <li><img src="http://fgm.cc/learn/lesson7/img/01.jpg"></li>
+        <li><img src="http://fgm.cc/learn/lesson7/img/02.jpg"></li>
+        <li><img src="http://fgm.cc/learn/lesson7/img/03.jpg"></li>
+        <li><img src="http://fgm.cc/learn/lesson7/img/04.jpg"></li>
+        <li><img src="http://fgm.cc/learn/lesson7/img/05.jpg"></li>
+      </ul>
+    </div>
+    <ul id="list">
+      <li>1</li>
+      <li>2</li>
+      <li>3</li>
+      <li>4</li>
+      <li>5</li>
+    </ul>
+  </div>
+</body>
+
+</html>
