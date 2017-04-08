@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>2</title>
+</head>
+<style>
+  * {
+    padding: 0;
+    margin: 0;
+    border: none;
+  }
+
+  body {
+    background-color: #000;
+    /*background-color: lightblue;*/
+  }
+
+  #wrapper {
+    position: relative;
+    display: block;
+    margin: 20px auto 0 auto;
+    width: 800px;
+    min-height: 300px;
+    /*background-color: green;*/
+  }
+
+  #lMask,
+  #rMask {
+    /*background-color: red;*/
+    position: absolute;
+    /*opacity: 0.2;*/
+    cursor: pointer;
+  }
+
+  #title {
+    position: absolute;
+    background-color: black;
+    opacity: 0.6;
+    text-align: center;
+    font-size: 20px;
+    line-height: 50px;
+    z-index: 30;
+    color: white;
+    /*border-right: 2px solid red;*/
+  }
+
+  #wrapper img {
+    display: block;
+    margin: 0 auto;
+    border: none;
+  }
+
+  #lBtn,
+  #rBtn {
+    position: absolute;
+    width: 39px;
+    height: 80px;
+    top: 50%;
+    margin-top: -40px;
+    background: url("http://fgm.cc/learn/lesson7/img/btn.png");
+    cursor: pointer;
+    opacity: 0;
+  }
+
+  #lBtn {
+    left: 10px;
+  }
+
+  #rBtn {
+    right: 10px;
+    background-position: -39px 0;
+  }
+
+  .loading {
+    background: url("http://fgm.cc/learn/lesson7/img/loading.gif") 50% 50% no-repeat;
+  }
+</style>
+<script>
+  window.onload = function () {
+    var wrapperEle = document.getElementById("wrapper");
+    var showEle = document.getElementById("show");
+    var lMaskEle = document.getElementById("lMask");
+    var rMaskEle = document.getElementById("rMask");
+    var titleEle = document.getElementById("title");
+    var lBtnEle = document.getElementById("lBtn");
+    var rBtnEle = document.getElementById("rBtn");
+    var currIndex = 0;
+    var aData = [{
+        "imgSrc": "http://img1.gtimg.com/news/pics/hv1/106/238/825/53706421.jpg",
+        "title": "7月26日，吊车将事故现场的车头残片吊至大型运输车辆上。"
+      },
+      {
+        "imgSrc": "http://img1.gtimg.com/news/pics/hv1/105/238/825/53706420.jpg",
+        "title": "7月26日，一辆大卡车准备驶离事故现场。"
+      },
+      {
+        "imgSrc": "http://img1.gtimg.com/news/pics/hv1/101/238/825/53706416.jpg",
+        "title": "7月26日，工人在给最后一节车厢盖上彩条布，准备运离现场。"
+      },
+      {
+        "imgSrc": "http://img1.gtimg.com/news/pics/hv1/99/238/825/53706414.jpg",
+        "title": "7月26日，一名工人在事故现场最后一节车厢上作业。"
+      },
+      {
+        "imgSrc": "http://img1.gtimg.com/news/pics/hv1/100/238/825/53706415.jpg",
+        "title": "7月26日，工人在给最后一节车厢盖上彩条布，准备运离现场。"
+      }
+    ];
+
+    //util
+    var Util = {
+      getCompute: function (ele, style) {
+        return parseInt(window.getComputedStyle(ele)[style]);
+        // console.log("after " + parseFloat(window.getComputedStyle(ele)[style]));
+        // var strOut = window.getComputedStyle(ele)[style];
+        // strOut.replace("px", "");
+        // return parseInt(strOut);
+      }
+    }
+
+    //setPosition
+    function setPosition(newImg) {
+      imgWidth = Util.getCompute(newImg, "width");
+      wrapperEle.style.width = imgWidth > 800 ? imgWidth + "px" : "800px";
+      lMaskEle.style.width = rMaskEle.style.width = imgWidth / 2 + "px";
+      lMaskEle.style.height = rMaskEle.style.height = wrapperEle.style.height = Util.getCompute(newImg, "height") +
+        "px";
+      titleEle.style.width = imgWidth + "px";
+      console.log(parseInt(window.getComputedStyle(newImg).marginLeft));
+      titleEle.style.left = Util.getCompute(newImg, "marginLeft") + "px";
+      lMaskEle.style.top = rMaskEle.style.top = 0;
+      rMaskEle.style.right = 0;
+      //set img position
+
+    }
+
+    //show title
+    function showTitle() {
+      var timerID = setInterval(function () {
+        var targetHeight = 50;
+        var currHeight = Util.getCompute(titleEle, "height");
+        // console.log("currHeight" + currHeight);
+        //delta
+        var delta = (targetHeight - currHeight) / 8;
+        delta = delta > 0 ? Math.ceil(delta) : Math.floor(delta);
+        titleEle.style.height = currHeight + delta + "px";
+        if (currHeight == targetHeight) {
+          titleEle.innerHTML = aData[currIndex].title;
+          // console.log(titleEle.innerHTML);
+          clearInterval(timerID);
+        }
+      }, 20)
+    }
+
+    //hide title
+    function hideTitle() {
+      titleEle.style.height = "0px";
+      titleEle.innerHTML = "";
+    }
+
+    //load image
+    function loadImg() {
+      hideTitle();
+      showTitle();
+      wrapperEle.className = "loading";
+      var oldImg = document.getElementsByTagName("img")[0];
+      oldImg && wrapperEle.removeChild(oldImg);
+      var newImg = new Image();
+      var trueImg = document.createElement("img");
+      newImg.src = aData[currIndex].imgSrc;
+      newImg.onload = function () {
+        wrapperEle.className = "";
+        trueImg.src = this.src;
+        wrapperEle.appendChild(trueImg);
+        //set Position
+        setPosition(trueImg);
+      }
+    }
+
+    //toggle img
+    rBtnEle.onclick = function () {
+      currIndex == aData.length - 1 ? (alert("last one")) : (currIndex++);
+      loadImg();
+
+    }
+
+    lBtnEle.onclick = function () {
+      currIndex == 0 ? (alert("first one")) : (currIndex--);
+      loadImg();
+    }
+
+
+    lMaskEle.onmouseover = lBtnEle.onmouseover = function () {
+      showBtn(lBtnEle);
+    }
+
+    lMaskEle.onmouseout = function () {
+      hideBtn(lBtnEle);
+    }
+
+    rMaskEle.onmouseover = rBtnEle.onmouseover = function () {
+      showBtn(rBtnEle);
+    }
+
+    rMaskEle.onmouseout = function () {
+      hideBtn(rBtnEle);
+    }
+
+    // set btn show
+    function showBtn(btn) {
+      clearInterval(btn.timer);
+      btn.timer = setInterval(function () {
+        var out = 0.2 + parseFloat(window.getComputedStyle(btn).opacity);
+        btn.style.opacity = out;
+        btn.style.opacity >= 1 && clearInterval(btn.timer);
+      }, 20)
+    }
+
+    function hideBtn(btn) {
+      clearInterval(btn.timer);
+      btn.timer = setInterval(function () {
+        var out = -0.2 + parseFloat(window.getComputedStyle(btn).opacity);
+        btn.style.opacity = out;
+        btn.style.opacity <= 0 && clearInterval(btn.timer);
+      }, 20)
+    }
+
+
+
+    loadImg();
+    // setPosition();
+    // showTitle();
+  }
+</script>
+
+<body>
+  <div id="wrapper">
+    <!--<img id="show"></img>-->
+    <div id="lMask"></div>
+    <div id="rMask"></div>
+    <div id="lBtn"></div>
+    <div id="rBtn"></div>
+    <div id="title"></div>
+  </div>
+</body>
+
+</html>
