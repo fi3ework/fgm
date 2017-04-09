@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>2</title>
+</head>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    background-color: slategray;
+  }
+
+  ul {
+    position: absolute;
+    list-style-type: none;
+    width: 1530px;
+  }
+
+  li {
+    display: block;
+    float: left;
+    margin-right: 10px;
+    border-radius: 5px;
+    background-color: #000;
+    color: white;
+    padding: 10px;
+    text-align: center;
+  }
+
+  li:last-of-type {
+    margin-right: 0;
+  }
+
+  li img {
+    border-radius: 5px;
+    margin-bottom: 6px;
+  }
+
+  #wrapper {
+    margin: 20px auto 0;
+    width: 606px;
+    /*margin-left: 200px;*/
+    /*margin-top: 100px;*/
+  }
+
+  #list {
+    position: relative;
+    height: 144px;
+    width: 606px;
+    overflow: hidden;
+  }
+
+  #slider {
+    margin-top: 2px;
+    position: relative;
+    width: 606px;
+    height: 19px;
+    background-color: black;
+  }
+
+  #leftEnd,
+  #rightEnd {
+    position: absolute;
+    width: 28px;
+    height: 19px;
+    background: url(http://fgm.cc/learn/lesson8/img/03.gif) no-repeat;
+  }
+
+  #rightEnd {
+    right: 0;
+    background-position: -32px 0;
+  }
+
+  #leftEnd.end,
+  #rightEnd.end {
+    background-position-y: -19px;
+  }
+
+  #middleEnd {
+    position: relative;
+    margin-left: 28px;
+    width: 550px;
+    height: 17px;
+    border: 1px solid #545454;
+    border-left: none;
+    border-right: none;
+  }
+
+  #sliderBar {
+    position: absolute;
+    top: 1px;
+    left: 0;
+    /*margin-left: 6px;*/
+    /*margin-right: 6px;*/
+    width: 220px;
+    height: 15px;
+    background: url(http://fgm.cc/learn/lesson8/img/01.gif) repeat-x;
+    cursor: pointer;
+  }
+
+  #barLeftEnd,
+  #barRightEnd {
+    position: absolute;
+    width: 6px;
+    height: 15px;
+    background: url(http://fgm.cc/learn/lesson8/img/02.gif) no-repeat;
+  }
+
+  #barLeftEnd {
+    left: -6px;
+  }
+
+  #barRightEnd {
+    right: -6px;
+    background-position: -6px 0;
+  }
+</style>
+<script>
+  window.onload = function () {
+    var sliderBarEle = document.getElementById("sliderBar");
+    var leftEndEle = document.getElementById("leftEnd");
+    var rightEndEle = document.getElementById("rightEnd");
+    var ulEle = document.getElementsByTagName("ul")[0];
+    var visibleWidth = parseInt(window.getComputedStyle(document.getElementById("list")).width);
+    var ulWidth = parseInt(window.getComputedStyle(ulEle).width);
+    var sliderRegion = document.getElementById("middleEnd");
+    var sliderBarWidth = sliderBarEle.offsetWidth;
+    var sliderRegionWidth = sliderRegion.offsetWidth;
+    var targetPercent;
+    var deltaX;
+    var bDragging;
+    var oldOffsetLeft;
+
+    //limit region
+    function limitRegion(targetLeft) {
+      var targetLeft = event.offsetX - sliderBarWidth / 2;
+      targetLeft < 0 && (targetLeft = 0);
+      targetLeft > (sliderRegionWidth - sliderBarWidth) && (targetLeft = sliderRegionWidth - sliderBarWidth);
+      return targetLeft;
+    }
+
+    //set slider bar click
+    sliderRegion.onclick = function (event) {
+      var targetLeft = limitRegion(event.offsetX - sliderBarWidth / 2);
+      //set targetPercent
+      targetPercent = targetLeft / (sliderRegionWidth - sliderBarWidth);
+      move(sliderBarEle, targetLeft);
+      moveGalary();
+    }
+
+    //move 
+    function move(ele, targetPos, endDo) {
+      clearInterval(ele.timer);
+      ele.timer = setInterval(function (event) {
+        var speed = (targetPos - ele.offsetLeft) / 5;
+        speed = speed > 0 ? Math.ceil(speed) : Math.floor(speed);
+        ele.offsetLeft == targetPos ? (clearInterval(ele.timer), endDo && endDo()) :
+          (ele.style.left = ele.offsetLeft + speed + "px");
+      }, 30);
+    }
+
+    //move gallary
+    function moveGalary() {
+      var targetGallaryPos = parseInt(-targetPercent * (ulWidth - visibleWidth));
+      move(ulEle, targetGallaryPos, checkIfReachEnd);
+    }
+
+    //set end style
+    function checkIfReachEnd() {
+      console.log(sliderBarEle.offsetLeft);
+      leftEndEle.className = sliderBarEle.offsetLeft == 0 ? "end" : "";
+      rightEndEle.className = sliderBarEle.offsetLeft == sliderRegionWidth - sliderBarWidth ? "end" : "";
+    }
+
+    var oldStart;
+    //set dragging hover
+
+    sliderBarEle.onclick = function (event) {
+      event.stopPropagation();
+    }
+
+    sliderBarEle.onmousedown = function (event) {
+      clearInterval(sliderBarEle.timer);
+      clearInterval(ulEle.timer);
+      sliderBarEle.dragging = true;
+      oldStart = event.clientX;
+      oldOffsetLeft = sliderBarEle.offsetLeft;
+    }
+
+    document.onmousemove = function (event) {
+      if (sliderBarEle.dragging) {
+        //TODO: use limit
+        var targetLeft = event.clientX - oldStart;
+        sliderBarEle.style.left = targetLeft + oldOffsetLeft + "px";
+        sliderBarEle.offsetLeft > sliderRegionWidth - sliderBarWidth && (sliderBarEle.style.left =
+          sliderRegionWidth - sliderBarWidth + "px");
+        sliderBarEle.offsetLeft < 0 && (sliderBarEle.style.left = 0);
+
+        targetPercent = sliderBarEle.offsetLeft / (sliderRegionWidth - sliderBarWidth);
+        console.log(targetLeft);
+        // moveGalary();
+        var targetGallaryPos = parseInt(-targetPercent * (ulWidth - visibleWidth));
+        ulEle.style.left = targetGallaryPos + "px";
+
+        checkIfReachEnd();
+      }
+    }
+
+    document.onmouseup = function () {
+      sliderBarEle.dragging = false;
+    }
+
+  }
+</script>
+
+<body>
+  <div id="wrapper">
+    <div id="list">
+      <ul>
+        <li><img src="http://fgm.cc/learn/lesson8/img/1.jpg" />
+          <p>iPhone 4</p>
+        </li>
+        <li><img src="http://fgm.cc/learn/lesson8/img/2.jpg" />
+          <p>iPad 2</p>
+        </li>
+        <li><img src="http://fgm.cc/learn/lesson8/img/3.jpg" />
+          <p>iPod touch</p>
+        </li>
+        <li><img src="http://fgm.cc/learn/lesson8/img/4.jpg" />
+          <p>iPod classic</p>
+        </li>
+        <li><img src="http://fgm.cc/learn/lesson8/img/5.jpg" />
+          <p>iPod shuffle</p>
+        </li>
+        <li><img src="http://fgm.cc/learn/lesson8/img/6.jpg" />
+          <p>iPod nano</p>
+        </li>
+        <li><img src="http://fgm.cc/learn/lesson8/img/7.jpg" />
+          <p>MacBook Air</p>
+        </li>
+        <li><img src="http://fgm.cc/learn/lesson8/img/8.jpg" />
+          <p>MacBook Pro</p>
+        </li>
+        <li><img src="http://fgm.cc/learn/lesson8/img/9.jpg" />
+          <p>Mac mini</p>
+        </li>
+        <li><img src="http://fgm.cc/learn/lesson8/img/10.jpg" />
+          <p>Mac Pro</p>
+        </li>
+      </ul>
+    </div>
+    <div id="slider">
+      <div id="leftEnd" class="end"></div>
+      <div id="rightEnd"></div>
+      <div id="middleEnd">
+        <div id="sliderBar">
+          <div id="barLeftEnd"></div>
+          <div id="barRightEnd"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

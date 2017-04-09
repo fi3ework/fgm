@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>1</title>
+</head>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    background-color: #000;
+  }
+
+  #wrapper {
+    position: relative;
+    width: 426px;
+    height: 640px;
+    margin: 20px auto;
+    background: url(http://fgm.cc/iphone/1.jpg) no-repeat;
+  }
+
+  #slider {
+    position: absolute;
+    left: 50%;
+    bottom: 33px;
+    width: 358px;
+    height: 62px;
+    /*background-color: #fff;*/
+    margin-left: -179px;
+  }
+
+  #btn {
+    position: absolute;
+    width: 93px;
+    height: 62px;
+    background: url(http://fgm.cc/iphone/btn.jpg) no-repeat;
+    cursor: pointer;
+  }
+</style>
+<script>
+  window.onload = function () {
+    var btnEle = document.getElementById("btn");
+    var sliderEle = document.getElementById("slider");
+    var iPhoneELe = document.getElementById("wrapper");
+    var bMoving = false;
+    var deltaX;
+    var preLoad = new Image();
+    preLoad.src = "http://fgm.cc/iphone/2.jpg";
+
+    //down
+    btnEle.onmousedown = function (event) {
+      bMoving = true;
+      clearInterval(btnEle.timer);
+      deltaX = event.clientX;
+      startX = btnEle.offsetLeft;
+    };
+
+    //move
+    document.onmousemove = function (event) {
+      if (bMoving) {
+        btnEle.style.left = event.clientX - deltaX + startX + "px";
+        btnEle.offsetLeft <= 0 && (btnEle.style.left = "0");
+        btnEle.offsetLeft + btnEle.offsetWidth >= btnEle.parentNode.offsetWidth && (btnEle.style.left = btnEle.parentNode
+          .offsetWidth - btnEle.offsetWidth + "px");
+      }
+    }
+
+    //up
+    document.onmouseup = function () {
+      if (bMoving) {
+        bMoving = false;
+        var endPos = btnEle.offsetLeft;
+        endPos < sliderEle.offsetWidth / 2 ? startMove(0) : startMove(sliderEle.offsetWidth - btnEle.offsetWidth, showHome);
+      }
+    }
+
+    //start move
+    function startMove(targetPos, endDo) {
+      // clearInterval(btnEle.timer);
+      btnEle.timer = setInterval(function () {
+        var delta = (targetPos - btnEle.offsetLeft) / 8;
+        delta = delta > 0 ? Math.ceil(delta) : Math.floor(delta);
+        btnEle.offsetLeft == targetPos ? (clearInterval(btnEle.timer), endDo && endDo()) : (btnEle.style.left =
+          delta + btnEle.offsetLeft + "px");
+      }, 30)
+    }
+
+    //show main page
+    function showHome(){
+      btnEle.style.display = "none";
+      iPhoneELe.style.backgroundImage = "url(" + preLoad.src + ")";
+    }
+  }
+</script>
+
+<body>
+  <div id="wrapper">
+    <div id="slider">
+      <div id="btn"></div>
+    </div>
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>3</title>
+</head>
+<style>
+  #actor {
+    position: absolute;
+    width: 66px;
+    height: 45px;
+    background: url(http://fgm.cc/learn/lesson7/img/1.gif) 50% 50% no-repeat;
+  }
+
+  #actor.moving {
+    background: url(http://fgm.cc/learn/lesson7/img/2.gif) 50% 50% no-repeat;
+  }
+</style>
+<script>
+  window.onload = function () {
+    var mode1Ele = document.getElementById("mode1");
+    var mode2Ele = document.getElementById("mode2");
+    var modesEle = document.getElementsByTagName("button");
+    var actorEle = document.getElementById("actor");
+    var currMode = 0;
+    var mode2Actie = false;
+    //toggle btn innerHTML
+    function initToggleState(modesEle) {
+      for (var i = 0; i < modesEle.length; i++) {
+        modesEle[i].index = i + 1;
+
+        modesEle[i].onmouseup = function (event) {
+          event.stopPropagation();
+        }
+
+        modesEle[i].onclick = function (event) {
+          event.stopPropagation();
+          // event.cancelBubble = true;
+          if (this.innerHTML.indexOf("（已激活）") != -1) {
+            this.innerHTML = this.innerHTML.replace("（已激活）", "");
+            currMode = 0;
+          } else {
+            for (var j = 0; j < modesEle.length; j++) {
+              modesEle[j].innerHTML = modesEle[j].innerHTML.replace("（已激活）", "");
+              currMode = this.index;
+            }
+            this.innerHTML += "（已激活）";
+          }
+          console.log(currMode);
+          //change onclick
+          switch (currMode) {
+            case 0:
+              console.log("clear0")
+              clearListener();
+              break;
+            case 1:
+              console.log("clear1")
+              clearListener();
+              document.addEventListener("click", mode1Click);
+              break;
+            case 2:
+              console.log("clear2")
+              clearListener();
+              document.addEventListener("mousedown", mode2MouseDown);
+              document.addEventListener("mouseup", mode2MouseUp);
+              document.addEventListener("mousemove", mode2MouseMove);
+              break;
+          }
+        }
+      }
+    }
+
+    //clear lister
+    function clearListener() {
+      console.log("into removeLister");
+      document.removeEventListener("click", mode1Click);
+      document.removeEventListener("mousedown", mode2MouseDown);
+      document.removeEventListener("mouseup", mode2MouseUp);
+      document.removeEventListener("mousemove", mode2MouseMove);
+    }
+
+    //mode 1
+    var timer;
+
+    function mode1Click(event) {
+      clearInterval(timer);
+      timer = setInterval(function () {
+        actorEle.className = "moving";
+        var deltaX = (event.x - actorEle.offsetLeft) / 3;
+        var deltaY = (event.y - actorEle.offsetTop) / 3;
+        deltaX = deltaX > 0 ? Math.ceil(deltaX) : Math.floor(deltaX);
+        deltaY = deltaY > 0 ? Math.ceil(deltaY) : Math.floor(deltaY);
+        actorEle.style.left = actorEle.offsetLeft + deltaX + "px";
+        actorEle.style.top = actorEle.offsetTop + deltaY + "px";
+        actorEle.offsetLeft == event.x && (clearInterval(timer), actorEle.className = "");
+      }, 30)
+    }
+
+    //mode 2
+    var posArr = [];
+
+    function mode2MouseDown(event) {
+      console.log("into mode2 down");
+      posArr.push({
+        x: actorEle.offsetLeft,
+        y: actorEle.offsetTop
+      })
+      mode2Actie = true;
+      posArr = [];
+      posArr.push({
+        x: event.x,
+        y: event.y
+      });
+    }
+
+    function mode2MouseMove(event) {
+      console.log("into mode2 move");
+      if (mode2Actie) {
+        posArr.push({
+          x: event.x,
+          y: event.y
+        });
+      }
+    }
+
+    function mode2MouseUp(event) {
+      console.log("into mode2 up");
+      clearInterval(timer);
+      mode2Actie = false;
+      timer = setInterval(function () {
+        actorEle.className = "moving";
+        var currPos = posArr.shift();
+        actorEle.style.left = currPos.x + "px";
+        actorEle.style.top = currPos.y + "px";
+        !posArr.length && (clearInterval(timer), posArr = [], actorEle.className = "");
+        // console.log("x: " + posArr[i].x + " y: " + posArr[i].y);
+      }, 30)
+      return false;
+    }
+
+
+    //init
+    initToggleState(modesEle);
+
+  }
+</script>
+
+<body>
+  <button id="mode1">根据鼠标点击的位置移动</button><button id="mode2">根据鼠标轨迹移动</button>
+  <p>点击按钮好吗</p>
+  <div id="actor"></div>
+</body>
+
+</html>
